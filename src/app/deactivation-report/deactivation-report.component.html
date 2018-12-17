@@ -1,0 +1,62 @@
+
+<div class="row">
+  <div class="container-fluid">
+    <button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col reportTable">
+      <div>
+        <app-loading-container [ngClass]="{'': showReportLoading, hidden: !showReportLoading}"></app-loading-container>
+        <table class="myTable">
+          <tr>
+            <th>Truck Number</th>
+            <th>DSN</th>
+            <th>Company Id</th>
+            <th>Status</th>
+            <th>Requested By</th>
+            <th>Requested Date</th>
+            <th>Completed Date</th>
+            <th *ngIf="isEditable">Notes</th>
+            <th *ngIf="!isEditable">Undo</th>
+            <th *ngIf="isEditable">Cancel</th>
+          </tr>
+          <tr *ngFor="let request of swapRequests" (click)="showDetails(request)">
+            <td>{{request.trucknum}}</td>
+            <td>{{request.dsn}}</td>
+            <td>{{request.cid}}</td>
+            <td *ngIf="isEditable">
+              <select [(ngModel)]="request.status" (ngModelChange)="updateStatus(request)" >
+                <option value="0">Pending Approval</option>
+                <option value="1">Pending Wireless Deactivation</option>
+                <option value="2">Removed</option>
+              </select>
+            </td>
+            <td *ngIf="!isEditable">
+              <label *ngIf="request.status == 0">Pending Approval</label>
+              <label *ngIf="request.status == 1">Pending Wireless Deactivation</label>
+              <label *ngIf="request.status == 2">Removed</label>
+            </td>
+            <td>{{request.username}}</td>
+            <td>{{request.requestedDate}}</td>
+            <td>{{request.completedDate}}</td>
+            <td *ngIf="isEditable"><textarea [(ngModel)]="request.notes"></textarea></td>
+            <td *ngIf="!isEditable">
+              <button title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" [disabled]="request.status != 0" (click)="undoRequest(request)">
+                Undo
+              </button>
+            </td>
+            <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="cancelRequest(request)">Cancel</button></td>
+          </tr>
+        </table>
+      </div>
+    <div class="pageBtns">
+        <div class="prevBtn" (click)="getPreviousPage()">
+            <label>Prev Page</label>
+          </div>
+      <div class="nextBtn" (click)="getNextPage()">
+        <label>Next Page</label>
+      </div>
+    </div>
+  </div>
+</div>

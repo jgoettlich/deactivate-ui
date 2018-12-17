@@ -1,0 +1,16 @@
+<nav class="navbar navbar-dark bg-dark mb-5">
+  <div class="navbar-expand mr-auto">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link clickable" [class.active]="reportShown==0"  (click)="changeReport(0)">Pending Deactivations</a>
+      <a class="nav-item nav-link clickable" [class.active]="reportShown==1" (click)="changeReport(1)">Deactivation Report</a>
+    </div>
+  </div>
+</nav>
+<div class='container-fluid'>
+  <div [class.hidden]="reportShown != 0">
+    <app-deactivation-report #pendingReport></app-deactivation-report>
+  </div>
+  <div [class.hidden]="reportShown != 1">
+      <app-deactivation-report #fullReport></app-deactivation-report>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+
+.myTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.myTable td, .myTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.myTable tr:nth-child(even){background-color: #f2f2f2;}
+.myTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.myTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #009492;
+    color: white;
+}
+
+.ds-group {
+    border-radius: 5px;
+    border: 1px solid #000000;
+    padding: 5px;
+}
+
+.ds-black{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.ds-dark-grey {
+    background-color: #474747;
+    color: #ffffff;
+}
+
+.ds-grey {
+    background-color: #797979;
+    color: #ffffff;
+}
+
+.ds-light-grey {
+    background-color: #c2c2c2;
+    color: #000000;
+}
+
+.ds-red {
+    background-color: #dd0f00;
+    color: #ffffff;
+}
+
+.ds-center {
+    text-align: center;
+}

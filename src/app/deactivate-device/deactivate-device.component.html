@@ -1,0 +1,96 @@
+<div class='container-fluid'>
+<div class="row">
+
+<div class="col deviceTable">
+  <div><h3>Select Devices to Deactivate</h3></div>
+  <button class="btn btn-outline-dark" (click)="open(content)">Mass Upload</button>
+  
+    <div>
+      <app-loading-container [ngClass]="{'': showDeviceLoading, hidden: !showDeviceLoading}"></app-loading-container>
+      <table class="myTable">
+        <tr>
+          <th>Truck Number</th>
+          <th>DSN</th>
+          <th>Company Id</th>
+          <th>Contract Start Date</th>
+          <th>Contract End Date</th>
+        </tr>
+        <tr *ngFor="let device of deviceList" (click)="addRow(device)">
+          <td>{{device.trucknum}}</td>
+          <td>{{device.dsn}}</td>
+          <td>{{device.cid}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  <div class="pageBtns">
+      <div class="prevBtn" (click)="getPreviousPage()">
+          <label>Prev Page</label>
+        </div>
+    <div class="nextBtn" (click)="getNextPage()">
+      <label>Next Page</label>
+    </div>
+  </div>
+</div>
+
+<div class="col deviceTable">
+  <div><h3>Units Pending Deactivation</h3></div>
+  <div><button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="swapDevices()">Deactivate Devices</button></div>
+  <div>
+    <app-loading-container [ngClass]="{'': showSwapLoading, hidden: !showSwapLoading}"></app-loading-container>
+    <table class="myTable">
+      <tr>
+        <th>Truck Number</th>
+        <th>DSN</th>
+        <th>Status</th>
+        <th>Remove</th>
+      </tr>
+      <tr *ngFor="let device of selectedDeviceList" >
+        <td>{{device.trucknum}}</td>
+        <td>{{device.dsn}}</td>
+        <td>
+          <select [(ngModel)]="device.status">
+            <option value="0">Pending Approval</option>
+            <option value="1">Pending Wireless Deactivation</option>
+            <option value="2">Removed</option>
+          </select>
+        </td>
+        <td (click)="removeRow(device)">Remove</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Enter truck names comma seperated</h4>
+  </div>
+  <div class="modal-body">
+    <div [ngClass]="{blockScroll:!isProcessing, hidden: isProcessing}">
+      <textarea name="trucknumList" class="trucknumList" placeholder="trucknum, trucknum, ..." [(ngModel)]="truckListStr"></textarea>
+    </div>
+    <div>
+      <div [ngClass]="{blockScroll:isProcessing, hidden: !isProcessing}">
+          <app-loading-container [ngClass]="{'': showModalLoading, hidden: !showModalLoading}"></app-loading-container>
+          <table class="myTable">
+            <tr>
+              <th>Bad Truck Numbers</th>
+            </tr>
+            <tr *ngFor="let name of badNames">
+              <td>{{name}}</td>
+            </tr>
+          </table>
+        </div>
+      <div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="processTrucks()" [disabled]="isProcessing">Process</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>
+</div>

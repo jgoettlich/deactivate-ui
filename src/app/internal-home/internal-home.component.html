@@ -1,0 +1,17 @@
+<nav class="navbar navbar-dark bg-dark mb-5">
+  <div class="navbar-expand mr-auto">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link clickable" [class.active]="tabShown==0" (click)="changeTab(0)">Pending Deactivations</a>
+      <a class="nav-item nav-link clickable" [class.active]="tabShown==1" (click)="changeTab(1)">Deactivated Devices</a>
+      <a class="nav-item nav-link clickable" [class.active]="tabShown==2" (click)="changeTab(2)">Customer Info</a>
+    </div>
+  </div>
+</nav>
+<div class='container-fluid'>
+  <div [ngClass]="{'': tabShown == 0, hidden: tabShown != 0}">
+    <app-deactivation-report #pendingReport></app-deactivation-report>
+  </div>
+  <div [ngClass]="{'': tabShown == 2, hidden: tabShown != 2}">
+    <app-customer-info></app-customer-info>
+  </div>
+</div>
