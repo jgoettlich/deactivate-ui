@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DeactivateService } from '../shared/deactivate.service';
-import { Device } from '../shared/device';
+import { DeactivateService } from '../services/deactivate.service';
+import { Device } from '../model/device';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeactivateRequest } from '../shared/deactivate-request';
-import { CustomerService } from '../shared/customer.service';
+import { DeactivateRequest } from '../model/deactivate-request';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-deactivate-device',
@@ -11,19 +11,21 @@ import { CustomerService } from '../shared/customer.service';
   styleUrls: ['./deactivate-device.component.css']
 })
 export class DeactivateDeviceComponent implements OnInit {
-  truckListStr: string;
-  badNames: string[] = [];
-  deviceList: Device[] = [];
-  selectedDeviceList: Device[] = [];
-  pageNumber: number = 0;
-  pageSize: number = 10;
-  isProcessing = false;
-  processCount: number = 0;
-  processedCount: number = 0;
-  showModalLoading: boolean = false;
-  showDeviceLoading: boolean = false;
-  showSwapLoading: boolean = false;
-  pageBtnClicked: boolean = false;
+  truckListStr: string          = null;
+  badNames: string[]            = [];
+  deviceList: Device[]          = [];
+  selectedDeviceList: Device[]  = [];
+  pageNumber: number            = 0;
+  pageSize: number              = 10;
+  isProcessing: boolean         = false;
+  processCount: number          = 0;
+  processedCount: number        = 0;
+  showModalLoading: boolean     = false;
+  showDeviceLoading: boolean    = false;
+  showSwapLoading: boolean      = false;
+  pageBtnClicked: boolean       = false;
+  isEditable: boolean           = false;
+  requestNotes: string          = "";
 
   constructor(private deactivateService: DeactivateService,
     private modalService: NgbModal,
@@ -106,11 +108,11 @@ export class DeactivateDeviceComponent implements OnInit {
   }
 
   resetModal(){
-    this.badNames = [];
-    this.isProcessing = false;
-    this.truckListStr = '';
-    this.processCount = 0;
-    this.processedCount = 0;
+    this.badNames         = [];
+    this.isProcessing     = false;
+    this.truckListStr     = '';
+    this.processCount     = 0;
+    this.processedCount   = 0;
     this.showModalLoading = false;
   }
 
@@ -141,14 +143,29 @@ export class DeactivateDeviceComponent implements OnInit {
     }
   }
 
-  swapDevices(){
+  deactivateDevices(){
       let deactivateRequest: DeactivateRequest = {
         sessionId: '',
+        cid: this.customerService.getCompanyId(),
+        cm_notes: (this.isEditable)? this.requestNotes : null,
+        cust_notes: (!this.isEditable)? this.requestNotes : null,
+        completedDate: null,
+        reason: 0,
+        requestDate: null,
+        status: 0,
+        userId: null,
+        requestId: null,
+        username: '',
         deviceList: this.selectedDeviceList
       };
-      this.deactivateService.swapDSN(deactivateRequest).subscribe(response => {
+
+      this.deactivateService.deactivateDevice(deactivateRequest).subscribe(response => {
         // Handle Response
         this.selectedDeviceList = [];
       });
+  }
+
+  confirmRequest() {
+
   }
 }

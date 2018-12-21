@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeactivateService } from '../shared/deactivate.service';
+import { DeactivateService } from '../services/deactivate.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   swapDevices() {
-    this.router.navigate(['/', 'swapdevice']);
+    this.router.navigate(['/', 'deactivate']);
   }
 
   viewReports() {

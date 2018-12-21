@@ -1,0 +1,40 @@
+.hidden{
+    display: none;
+}
+
+.pageBtns {
+    display: block;
+    width: 100%;
+}
+
+.prevBtn {
+    float: left;
+}
+
+.nextBtn {
+    float: right;
+}
+
+.myTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.myTable td, .myTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.myTable tr:nth-child(even){background-color: #f2f2f2;}
+.myTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.myTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #009492;
+    color: white;
+}

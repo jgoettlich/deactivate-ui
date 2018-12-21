@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Device } from "./device";
-import { DeactivateRequest } from "./deactivate-request";
-import { DeactivationReport } from "./DeactivationReport";
+import { Device } from "../model/device";
+import { DeactivateRequest } from "../model/deactivate-request";
+import { DeactivationReport } from "../model/DeactivationReport";
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class DeactivateService {
         return this.http.get(fullUrl);//.pipe(map((this.extractData)));
     }
 
-    getSwapReport(companyId: number, page: number, pageSize: number, onlyPending: boolean): Observable<any> {
+    getDeactivateReport(companyId: number, page: number, pageSize: number, onlyPending: boolean): Observable<any> {
         let fullUrl = this.baseUrl + `deactivate/getReport?companyId=${companyId}&page=${page}&pageSize=${pageSize}&onlyPending=${onlyPending}`;
 
         return this.http.get(fullUrl);
@@ -35,7 +35,7 @@ export class DeactivateService {
         return this.http.get(fullUrl);
     }
 
-    swapDSN(deactivateRequest: DeactivateRequest): Observable<any>{
+    deactivateDevice(deactivateRequest: DeactivateRequest): Observable<any>{
         let fullURL = `${this.baseUrl}deactivate/deactivateDevice`;
         return this.http.post(fullURL, deactivateRequest); 
     }
@@ -46,8 +46,8 @@ export class DeactivateService {
         return this.http.post(fullUrl, device);
     }
 
-    updateRequestStatus(request: DeactivationReport): Observable<any> {
-        let fullUrl = `${this.baseUrl}deactivate/updateStatus`;
+    updateRequest(request: DeactivationReport): Observable<any> {
+        let fullUrl = `${this.baseUrl}deactivate/updateRequest`;
 
         return this.http.post(fullUrl, request);
     }

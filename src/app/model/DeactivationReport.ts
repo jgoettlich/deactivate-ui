@@ -5,7 +5,10 @@ export interface DeactivationReport {
     trucknum: string;
     dsn: number;
     status: number;
-    requestedDate: string;
-    username: string;
+    requestDate: string;
     completedDate: string;
+    username: string;
+    cm_notes: string;
+    cust_notes: string;
+    reason: number;
 }

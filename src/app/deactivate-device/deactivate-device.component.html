@@ -36,7 +36,11 @@
 
 <div class="col deviceTable">
   <div><h3>Units Pending Deactivation</h3></div>
-  <div><button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="swapDevices()">Deactivate Devices</button></div>
+  <div><button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="deactivateDevices()">Deactivate Devices</button></div>
+  <div class="form-group">
+    <label>Request Notes:</label>
+    <textarea class="form-control" [(ngModel)]="requestNotes"></textarea>
+  </div>
   <div>
     <app-loading-container [ngClass]="{'': showSwapLoading, hidden: !showSwapLoading}"></app-loading-container>
     <table class="myTable">
@@ -49,7 +53,8 @@
       <tr *ngFor="let device of selectedDeviceList" >
         <td>{{device.trucknum}}</td>
         <td>{{device.dsn}}</td>
-        <td>
+        <td *ngIf="isEditable">Pending Approval</td>
+        <td *ngIf="!isEditable">
           <select [(ngModel)]="device.status">
             <option value="0">Pending Approval</option>
             <option value="1">Pending Wireless Deactivation</option>

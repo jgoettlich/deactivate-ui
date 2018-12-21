@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DeactivationReport } from '../model/DeactivationReport';
-import { DeactivateService } from '../services/deactivate.service';
+import { Component, OnInit } from '@angular/core';
+import { DeactivateRequest } from '../model/deactivate-request';
 import { CustomerService } from '../services/customer.service';
+import { DeactivateService } from '../services/deactivate.service';
+import { DeactivationReport } from '../model/DeactivationReport';
 import { Device } from '../model/device';
-import { DeactivateRequestTableComponent } from '../deactivate-request-table/deactivate-request-table.component';
-import { DeviceTableComponent } from '../device-table/device-table.component';
 
 @Component({
-  selector: 'app-deactivation-report',
-  templateUrl: './deactivation-report.component.html',
-  styleUrls: ['./deactivation-report.component.css']
+  selector: 'app-deactivate-request-table',
+  templateUrl: './deactivate-request-table.component.html',
+  styleUrls: ['./deactivate-request-table.component.css']
 })
-export class DeactivationReportComponent implements OnInit {
-  requestList: DeactivationReport[] = [];
+export class DeactivateRequestTableComponent implements OnInit {
+
+  requestList : DeactivateRequest[] = [];
   pageNumber: number = 0;
   pageSize: number = 20;
   showReportLoading: boolean = false;
@@ -20,8 +20,6 @@ export class DeactivationReportComponent implements OnInit {
   showOnlyPending: boolean = false;
   hasLoaded: boolean = false;
   clearIfEmpty: boolean = false;
-
-  @ViewChild("deviceTable") deviceTable : DeviceTableComponent;
 
   constructor(private deactivateService: DeactivateService,
     private customerService: CustomerService) { }

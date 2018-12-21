@@ -23,8 +23,7 @@
             <th *ngIf="isEditable">Cancel</th>
             <th *ngIf="isEditable">Confirm</th>
           </tr>
-          <ng-container *ngFor="let request of requestList">
-          <tr>
+          <tr *ngFor="let request of requestList">
             <td>{{request.cid}}</td>
             <td *ngIf="isEditable">
               <select [(ngModel)]="request.status" (ngModelChange)="updateStatus(request)" >
@@ -70,12 +69,6 @@
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="cancelRequest(request)">Cancel</button></td>
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="confirmRequest(request)">Confirm</button></td>
           </tr>
-          <tr>
-            <td colspan="10">
-              <app-device-table [deviceList]="request.deviceList"></app-device-table>
-            </td>
-          </tr>
-        </ng-container>
         </table>
       </div>
     <div class="pageBtns">
