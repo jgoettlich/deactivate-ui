@@ -1,11 +1,11 @@
 {
-    "/api/*": {
-      "target": "https://localhost:44392/api/",
+    "/deactivate-service/*": {
+      "target": "https://localhost:44392/",
       "secure": false,
       "logLevel": "debug",
       "changeOrigin": true,
       "pathRewrite": {
-        "^/api": ""
+        "^/deactivate-service": ""
       }
     }
   }

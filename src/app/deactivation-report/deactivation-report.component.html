@@ -1,7 +1,8 @@
 
 <div class="row">
   <div class="container-fluid">
-    <button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button>
+    <div class="left"><button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button></div>
+    <div class="right"><button class="btn btn-outline-dark" (click)="createNewRequest()">New Request</button></div>
   </div>
 </div>
 <div class="row">
@@ -11,21 +12,23 @@
         <table class="myTable">
           <tr>
             <th>Company Id</th>
-            <th>Status</th>
-            <th>Reason</th>
+            <th (click)="setSort('status')">Status <i id="statusArrows" class="fa fa-fw fa-sort"></i></th>
+            <th (click)="setSort('reason')">Reason <i id="reasonArrows" class="fa fa-fw fa-sort"></i></th>
             <th>Customer Notes</th>
             <th>CM Notes</th>
-            <th>Request Date</th>
-            <th>Completed Date</th>
-            <th>Requested By</th>
+            <th (click)="setSort('createdDate')">Created Date <i id="createdDateArrows" class="fa fa-fw fa-sort-asc"></i></th>
+            <th (click)="setSort('requestedDate')">Requested Date <i id="requestedDateArrows" class="fa fa-fw fa-sort"></i></th>
+            <th (click)="setSort('completedDate')">Completed Date <i id="completedDateArrows" class="fa fa-fw fa-sort"></i></th>
+            <th (click)="setSort('username')">Requested By <i id="usernameArrows" class="fa fa-fw fa-sort"></i></th>
             <th>Device Count</th>
+            <th>Deactivate Fee</th>
             <th *ngIf="!isEditable">Undo</th>
             <th *ngIf="isEditable">Cancel</th>
             <th *ngIf="isEditable">Confirm</th>
           </tr>
           <ng-container *ngFor="let request of requestList">
           <tr>
-            <td>{{request.cid}}</td>
+            <td (click)="viewDetails(request)">{{request.cid}}</td>
             <td *ngIf="isEditable">
               <select [(ngModel)]="request.status" (ngModelChange)="updateStatus(request)" >
                 <option value="0">Pending Approval</option>
@@ -35,8 +38,9 @@
             </td>
             <td *ngIf="!isEditable">
               <label *ngIf="request.status == 0">Pending Approval</label>
-              <label *ngIf="request.status == 1">Pending Wireless Deactivation</label>
-              <label *ngIf="request.status == 2">Removed</label>
+              <label *ngIf="request.status == 1">Customer Confirm</label>
+              <label *ngIf="request.status == 2">Pending Wireless Deactivation</label>
+              <label *ngIf="request.status == 3">Removed</label>
             </td>
             <td *ngIf="isEditable">
               <select [(ngModel)]="request.reason">
@@ -53,15 +57,17 @@
               <label *ngIf="request.reason == 3">Other</label>
             </td>
             <td>
-              <textarea ([ngModel])="request.cust_notes"></textarea>
+              <textarea [(ngModel)]="request.cust_notes"></textarea>
             </td>
             <td>
-              <textarea ([ngModel])="request.cm_notes"></textarea>
+              <textarea [(ngModel)]="request.cm_notes"></textarea>
             </td>
-            <td>{{request.requestDate}}</td>
+            <td>{{request.createdDate}}</td>
+            <td>{{request.requestedDate}}</td>
             <td>{{request.completedDate}}</td>
             <td>{{request.username}}</td>
-            <td>{{request.deviceList.length}}</td>
+            <td (click)="viewDetails(request)">{{request.deviceList.length}}</td>
+            <td>{{request.fee}}</td>
             <td *ngIf="!isEditable">
               <button title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" [disabled]="request.status != 0" (click)="undoRequest(request)">
                 Undo
@@ -69,11 +75,6 @@
             </td>
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="cancelRequest(request)">Cancel</button></td>
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="confirmRequest(request)">Confirm</button></td>
-          </tr>
-          <tr>
-            <td colspan="10">
-              <app-device-table [deviceList]="request.deviceList"></app-device-table>
-            </td>
           </tr>
         </ng-container>
         </table>

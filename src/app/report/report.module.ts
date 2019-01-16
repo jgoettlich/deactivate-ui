@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { DeactivationReportComponent } from '../deactivation-report/deactivation-report.component';
 import { ReportHomeComponent } from '../report-home/report-home.component';
 import { LoadingContainerComponent } from '../loading-container/loading-container.component';
-import { DeactivateRequestTableComponent } from '../deactivate-request-table/deactivate-request-table.component';
 import { DeviceTableComponent } from '../device-table/device-table.component';
+import { RequestDetailsComponent } from '../request-details/request-details.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { DeviceTableComponent } from '../device-table/device-table.component';
     DeactivationReportComponent,
     DeviceTableComponent,
     LoadingContainerComponent,
-    DeactivateRequestTableComponent,
+    RequestDetailsComponent
   ],
   exports: [
     DeactivationReportComponent,

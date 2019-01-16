@@ -1,15 +1,33 @@
 <div class="container-fluid">
   <div class="mainContainer">
-    <div class="homeTitle">
-      <h1>Device Deactivation Tool</h1>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="left">
+          <h1>Request Summary:</h1>
+        </div>
+        <div class="right"><button class="btn btn-outline-dark" (click)="createRequest()">New Request</button></div>
+      </div>
     </div>
-    <div>
-      <p>You can either deactivate devices or view reports about devices deactivations.</p>
-    </div>
-    <div><p>{{response}}</p></div>
-    <div>
-      <div class="btn btn-outline-secondary" (click)="swapDevices()">Deactivate Devices</div>
-      <div class="btn btn-outline-secondary" (click)="viewReports()">View Reports</div> 
+    <div class="row">
+      <div class="container-fluid">
+        <div>
+          <label>Total units pending deactivation: {{deactivationCount}}</label>
+        </div>
+        <div>
+          <table class="myTable">
+            <tr>
+              <th>Pending Requests:</th>
+              <th>Waiting Customer Approval:</th>
+              <th>Pending Pending Wireless Deactivation:</th>
+            </tr>
+            <tr *ngIf="summaryList.length >= 3">
+              <td><label>{{summaryList[0].requestCount}} Requests, {{summaryList[0].deviceCount}} Devices</label></td>
+              <td><label>{{summaryList[1].requestCount}} Requests, {{summaryList[1].deviceCount}} Devices</label></td>
+              <td><label>{{summaryList[2].requestCount}} Requests, {{summaryList[2].deviceCount}} Devices</label></td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

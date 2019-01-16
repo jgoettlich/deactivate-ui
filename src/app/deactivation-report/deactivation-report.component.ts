@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DeactivationReport } from '../model/DeactivationReport';
 import { DeactivateService } from '../services/deactivate.service';
 import { CustomerService } from '../services/customer.service';
-import { Device } from '../model/device';
-import { DeactivateRequestTableComponent } from '../deactivate-request-table/deactivate-request-table.component';
 import { DeviceTableComponent } from '../device-table/device-table.component';
+import { DeactivateRequest } from '../model/DeactivateRequest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deactivation-report',
@@ -12,7 +11,7 @@ import { DeviceTableComponent } from '../device-table/device-table.component';
   styleUrls: ['./deactivation-report.component.css']
 })
 export class DeactivationReportComponent implements OnInit {
-  requestList: DeactivationReport[] = [];
+  requestList: DeactivateRequest[] = [];
   pageNumber: number = 0;
   pageSize: number = 20;
   showReportLoading: boolean = false;
@@ -20,11 +19,14 @@ export class DeactivationReportComponent implements OnInit {
   showOnlyPending: boolean = false;
   hasLoaded: boolean = false;
   clearIfEmpty: boolean = false;
+  sortColumn: string = 'createdDate';
+  sortAsc: boolean = true;
 
   @ViewChild("deviceTable") deviceTable : DeviceTableComponent;
 
   constructor(private deactivateService: DeactivateService,
-    private customerService: CustomerService) { }
+    private customerService: CustomerService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -32,7 +34,8 @@ export class DeactivationReportComponent implements OnInit {
   getReport(){
     this.hasLoaded = true;
     this.showReportLoading = true;
-    this.deactivateService.getDeactivateReport(this.customerService.getCompanyId(), this.pageNumber, this.pageSize, this.showOnlyPending).subscribe(results => {
+    this.deactivateService.getDeactivateReport(this.customerService.getCompanyId(), this.pageNumber, this.pageSize, 
+    this.showOnlyPending, this.sortColumn, this.sortAsc).subscribe(results => {
       this.showReportLoading = false;
       if(results != null){
         if(results.length > 0){
@@ -69,44 +72,45 @@ export class DeactivationReportComponent implements OnInit {
     this.getReport();
   }
 
-  showDetails(request: DeactivationReport) {
-    
+  viewDetails(request: DeactivateRequest) {
+    this.router.navigate(['/', 'deactivateRequest'], { queryParams: { requestId: request.requestId } });
   }
 
-  updateStatus(request: DeactivationReport) {
+  updateStatus(request: DeactivateRequest) {
     this.deactivateService.updateRequest(request).subscribe(response => {});
   }
 
-  undoRequest(request: DeactivationReport){
-    let device: Device = {
-      cid : this.customerService.getCompanyId(),
-      dsn : request.dsn,
-      status : request.status,
-      trucknum :  request.trucknum,
-      vid : request.vid,
-      reason : request.reason
-    };
-
-    this.deactivateService.cancelRequest(device).subscribe(resp => {
+  undoRequest(request: DeactivateRequest){
+    this.deactivateService.cancelRequest(request).subscribe(resp => {
       this.clearIfEmpty = true;
       this.getReport();
     });
   }
 
-  cancelRequest(request: DeactivationReport) {
-    let device: Device = {
-      cid : this.customerService.getCompanyId(),
-      dsn : request.dsn,
-      status : request.status,
-      trucknum :  request.trucknum,
-      vid : request.vid,
-      reason : request.reason
-    };
-
-    this.deactivateService.cancelRequest(device).subscribe(resp => {
+  cancelRequest(request: DeactivateRequest) {
+    this.deactivateService.cancelRequest(request).subscribe(resp => {
       this.clearIfEmpty = true;
       this.getReport();
     });
+  }
+
+  setSort(columnName: string){
+    if(this.sortColumn == columnName){
+      this.sortAsc = !this.sortAsc;
+      document.getElementById(columnName + 'Arrows').className = (this.sortAsc)? "fa fa-fw fa-sort-asc" : "fa fa-fw fa-sort-desc";
+    }
+    else {
+      document.getElementById(this.sortColumn + 'Arrows').className = "fa fa-fw fa-sort";
+      this.sortColumn = columnName;
+      this.sortAsc = true;
+      document.getElementById(columnName + 'Arrows').className = "fa fa-fw fa-sort-asc";
+    }
+
+    this.getReport();
+  }
+
+  createNewRequest() {
+    
   }
 
 }

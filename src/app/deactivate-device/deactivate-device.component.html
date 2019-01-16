@@ -1,6 +1,44 @@
 <div class='container-fluid'>
+  <div class="row">
+    <div class="container-fluid">
+      <div class="contractData">
+        <div>
+          <h3>Contract Data:</h3>
+        </div>
+        <div class="contractTable">
+          <div>
+            <table class="myTable">
+              <tr>
+                <th>Contracted Unit Count</th>
+                <th>Active Unit Count</th>
+              </tr>
+              <tr>
+                <td>1500</td>
+                <td>1505</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container-fluid">
+      <div><label>Requested Deactivation Date:</label></div>
+      <div>
+        <div style="float:left;">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="requestedDate">
+        </div>
+        <div style="float:left;">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+              
+      </div>
+    </div>
+          
+  </div>
 <div class="row">
-
 <div class="col deviceTable">
   <div><h3>Select Devices to Deactivate</h3></div>
   <button class="btn btn-outline-dark" (click)="open(content)">Mass Upload</button>
@@ -37,10 +75,6 @@
 <div class="col deviceTable">
   <div><h3>Units Pending Deactivation</h3></div>
   <div><button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="deactivateDevices()">Deactivate Devices</button></div>
-  <div class="form-group">
-    <label>Request Notes:</label>
-    <textarea class="form-control" [(ngModel)]="requestNotes"></textarea>
-  </div>
   <div>
     <app-loading-container [ngClass]="{'': showSwapLoading, hidden: !showSwapLoading}"></app-loading-container>
     <table class="myTable">
@@ -68,14 +102,22 @@
 </div>
 
 </div>
+<div class="row">
+  <div class="container-fluid">
+    <div class="form-group">
+      <h3>Request Notes:</h3>
+      <textarea class="form-control" [(ngModel)]="requestNotes"></textarea>
+    </div>
+  </div>
+</div>
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Enter truck names comma seperated</h4>
+    <h4 class="modal-title" id="modal-basic-title">Enter truck names on seperate lines</h4>
   </div>
   <div class="modal-body">
     <div [ngClass]="{blockScroll:!isProcessing, hidden: isProcessing}">
-      <textarea name="trucknumList" class="trucknumList" placeholder="trucknum, trucknum, ..." [(ngModel)]="truckListStr"></textarea>
+      <textarea name="trucknumList" class="trucknumList" placeholder="trucknums" [(ngModel)]="truckListStr"></textarea>
     </div>
     <div>
       <div [ngClass]="{blockScroll:isProcessing, hidden: !isProcessing}">

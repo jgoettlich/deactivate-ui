@@ -38,3 +38,11 @@
     background-color: #009492;
     color: white;
 }
+
+.right{
+    float: right;
+}
+
+.left {
+    float: left;
+}

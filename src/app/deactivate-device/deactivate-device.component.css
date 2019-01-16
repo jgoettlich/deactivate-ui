@@ -82,3 +82,13 @@
 .hidden {
     display: none;
 }
+
+.contractData {
+    text-align: center;
+}
+
+.contractTable {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}

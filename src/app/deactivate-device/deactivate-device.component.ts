@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DeactivateService } from '../services/deactivate.service';
 import { Device } from '../model/device';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeactivateRequest } from '../model/deactivate-request';
+import { DeactivateRequest } from '../model/DeactivateRequest';
 import { CustomerService } from '../services/customer.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @Component({
   selector: 'app-deactivate-device',
@@ -26,6 +27,7 @@ export class DeactivateDeviceComponent implements OnInit {
   pageBtnClicked: boolean       = false;
   isEditable: boolean           = false;
   requestNotes: string          = "";
+  requestedDate: Date           = null;
 
   constructor(private deactivateService: DeactivateService,
     private modalService: NgbModal,
@@ -120,7 +122,7 @@ export class DeactivateDeviceComponent implements OnInit {
   processTrucks(){
     this.isProcessing = true;
     this.showModalLoading = true;
-    let truckList: string[] = this.truckListStr.split(',');
+    let truckList: string[] = this.truckListStr.split('\n');
     this.processCount = truckList.length;
 
     for(let i=0;i<truckList.length;i++){
@@ -151,12 +153,14 @@ export class DeactivateDeviceComponent implements OnInit {
         cust_notes: (!this.isEditable)? this.requestNotes : null,
         completedDate: null,
         reason: 0,
-        requestDate: null,
+        createdDate: null,
         status: 0,
         userId: null,
         requestId: null,
         username: '',
-        deviceList: this.selectedDeviceList
+        deviceList: this.selectedDeviceList,
+        fee: 0,
+        requestedDate: this.requestedDate
       };
 
       this.deactivateService.deactivateDevice(deactivateRequest).subscribe(response => {

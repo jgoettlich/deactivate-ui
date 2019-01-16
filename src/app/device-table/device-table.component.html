@@ -1,6 +1,6 @@
-
-<div class="row">
-  <div class="col reportTable">
+<div class="tableContainer">
+  <div class="row">
+    <div class="col reportTable">
       <div>
         <app-loading-container [ngClass]="{'': showReportLoading, hidden: !showReportLoading}"></app-loading-container>
         <table class="myTable">
@@ -10,6 +10,7 @@
             <th>Company Id</th>
             <th>Status</th>
             <th>Reason</th>
+            <th>Deactivation Fee</th>
             <th *ngIf="!isEditable">Undo</th>
             <th *ngIf="isEditable">Cancel</th>
             <th *ngIf="isEditable">Confirm</th>
@@ -19,7 +20,7 @@
             <td>{{device.dsn}}</td>
             <td>{{device.cid}}</td>
             <td *ngIf="isEditable">
-              <select [(ngModel)]="device.status" (ngModelChange)="updateStatus(device)" >
+              <select [(ngModel)]="device.status" (ngModelChange)="updateStatus(device)">
                 <option value="0">Pending Approval</option>
                 <option value="1">Pending Wireless Deactivation</option>
                 <option value="2">Removed</option>
@@ -44,8 +45,11 @@
               <label *ngIf="device.reason == 2">Return</label>
               <label *ngIf="device.reason == 3">Other</label>
             </td>
+            <td *ngIf="!isEditable">{{device.fee}}</td>
+            <td *ngIf="isEditable"><input type="number" [(ngModel)]="device.fee" (blur)="updateDeviceFees($event)"/></td>
             <td *ngIf="!isEditable">
-              <button title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" [disabled]="device.status != 0" (click)="undoRequest(device)">
+              <button title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" [disabled]="device.status != 0"
+                (click)="undoRequest(device)">
                 Undo
               </button>
             </td>
@@ -54,5 +58,6 @@
           </tr>
         </table>
       </div>
+    </div>
   </div>
 </div>

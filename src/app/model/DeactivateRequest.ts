@@ -1,4 +1,4 @@
-import { Device } from "../model/device";
+import { Device } from "./device";
 
 export interface DeactivateRequest {
     requestId: string;
@@ -9,8 +9,10 @@ export interface DeactivateRequest {
     status: number;
     cm_notes: string;
     cust_notes: string;
-    requestDate: string;
+    createdDate: string;
     completedDate: string;
     username: string;
     deviceList: Device[];
+    fee: number;
+    requestedDate: Date;
 }

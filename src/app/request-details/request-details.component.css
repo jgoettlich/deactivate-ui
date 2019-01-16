@@ -1,0 +1,25 @@
+
+textarea {
+    width: 90%;
+    height: 325px;
+    overflow-y: scroll;
+}
+
+.ds-group {
+    border-radius: 5px;
+    border: 1px solid #000000;
+    padding: 5px;
+    width:100%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ds-light-grey {
+    background-color: #ddd;
+    color: #000000;
+}
+
+.headerContainer{
+    width: 100%;
+    margin-left: 10px;
+}

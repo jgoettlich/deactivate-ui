@@ -6,4 +6,6 @@ export interface Device{
     trucknum: string;
     status: number;
     reason: number;
+    requestId: string;
+    fee: number;
 }

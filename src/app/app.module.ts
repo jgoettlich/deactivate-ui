@@ -14,6 +14,11 @@ import { ReportHomeComponent } from './report-home/report-home.component';
 import { ReportModule } from './report/report.module';
 import { InternalHomeComponent } from './internal-home/internal-home.component';
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
+import { RequestDetailsComponent } from './request-details/request-details.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -21,20 +26,25 @@ import { CustomerInfoComponent } from './customer-info/customer-info.component';
     HomeComponent,
     DeactivateDeviceComponent,
     InternalHomeComponent,
-    CustomerInfoComponent,
+    CustomerInfoComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReportModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'deactivate', component: DeactivateDeviceComponent },
       { path: 'report', component: ReportHomeComponent },
-      { path: 'internal', component: InternalHomeComponent }
+      { path: 'internal', component: InternalHomeComponent },
+      { path: 'deactivateRequest', component: RequestDetailsComponent }
     ])
   ],
   providers: [
