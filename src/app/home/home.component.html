@@ -18,12 +18,24 @@
             <tr>
               <th>Pending Requests:</th>
               <th>Waiting Customer Approval:</th>
-              <th>Pending Pending Wireless Deactivation:</th>
+              <th>Pending Wireless Deactivation:</th>
             </tr>
             <tr *ngIf="summaryList.length >= 3">
-              <td><label>{{summaryList[0].requestCount}} Requests, {{summaryList[0].deviceCount}} Devices</label></td>
-              <td><label>{{summaryList[1].requestCount}} Requests, {{summaryList[1].deviceCount}} Devices</label></td>
-              <td><label>{{summaryList[2].requestCount}} Requests, {{summaryList[2].deviceCount}} Devices</label></td>
+              <td>
+                <button class="btn btn-link" (click)="viewStatusReport(0)">
+                  {{summaryList[0].requestCount}} Requests, {{summaryList[0].deviceCount}} Devices
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-link" (click)="viewStatusReport(1)">
+                  {{summaryList[1].requestCount}} Requests, {{summaryList[1].deviceCount}} Devices
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-link"(click)="viewStatusReport(2)">
+                  {{summaryList[2].requestCount}} Requests, {{summaryList[2].deviceCount}} Devices
+                </button>
+              </td>
             </tr>
           </table>
         </div>

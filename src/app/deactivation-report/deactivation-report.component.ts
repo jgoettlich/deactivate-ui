@@ -3,7 +3,7 @@ import { DeactivateService } from '../services/deactivate.service';
 import { CustomerService } from '../services/customer.service';
 import { DeviceTableComponent } from '../device-table/device-table.component';
 import { DeactivateRequest } from '../model/DeactivateRequest';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-deactivation-report',
@@ -21,12 +21,20 @@ export class DeactivationReportComponent implements OnInit {
   clearIfEmpty: boolean = false;
   sortColumn: string = 'createdDate';
   sortAsc: boolean = true;
+  filterColumn: string = null;
+  filterValue: any = null;
 
   @ViewChild("deviceTable") deviceTable : DeviceTableComponent;
 
   constructor(private deactivateService: DeactivateService,
     private customerService: CustomerService,
-    private router: Router) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { 
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.filterColumn = params['filterColumn'];
+        this.filterValue = params['filterValue'];
+      });
+    }
 
   ngOnInit() {
   }
@@ -34,8 +42,10 @@ export class DeactivationReportComponent implements OnInit {
   getReport(){
     this.hasLoaded = true;
     this.showReportLoading = true;
-    this.deactivateService.getDeactivateReport(this.customerService.getCompanyId(), this.pageNumber, this.pageSize, 
-    this.showOnlyPending, this.sortColumn, this.sortAsc).subscribe(results => {
+    this.deactivateService.getDeactivateReport(this.customerService.getCompanyId(), 
+    this.pageNumber, this.pageSize, 
+    this.showOnlyPending, this.sortColumn, 
+    this.sortAsc, this.filterColumn, this.filterValue).subscribe(results => {
       this.showReportLoading = false;
       if(results != null){
         if(results.length > 0){
@@ -110,7 +120,7 @@ export class DeactivationReportComponent implements OnInit {
   }
 
   createNewRequest() {
-    
+
   }
 
 }

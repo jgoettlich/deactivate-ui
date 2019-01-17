@@ -28,9 +28,14 @@ export class DeactivateService {
     }
 
     getDeactivateReport(companyId: number, page: number, pageSize: number, 
-        onlyPending: boolean, sortColumn: string, sortAsc: boolean): Observable<any> {
+        onlyPending: boolean, sortColumn: string, sortAsc: boolean,
+        filterColumn: string, filterValue: any): Observable<any> {
         let fullUrl = this.baseUrl + `deactivate/getReport?companyId=${companyId}&page=${page}&pageSize=${pageSize}&onlyPending=${onlyPending}`;
         fullUrl += `&sortColumn=${sortColumn}&sortAsc=${sortAsc}`;
+
+        if(filterColumn != null){
+            fullUrl += `&filterColumn=${filterColumn}&filterValue=${filterValue}`;
+        }
 
         return this.http.get(fullUrl, this.httpOptions);
     }
