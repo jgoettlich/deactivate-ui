@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Device } from '../model/device';
 import { DeactivateService } from '../services/deactivate.service';
+import { DeactivateRequest } from '../model/DeactivateRequest';
+import { StatusEnum } from '../model/StatusEnum';
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-device-table',
@@ -11,18 +15,33 @@ export class DeviceTableComponent implements OnInit {
 
   isEditable: boolean = false;
   showReportLoading: boolean = false;
-  @Input() deviceList: Device[] = [];
+  allowDeviceRemove: boolean = false;
+  @Input() request: DeactivateRequest = null;
+  deviceList: Device[] = [];
   
-  constructor(private deactivateService: DeactivateService) { }
+  constructor(private deactivateService: DeactivateService) { 
+    
+  }
 
   ngOnInit() {
+    
+  }
+
+  setRequest(request: DeactivateRequest) {
+    if(request == null) {
+      return;
+    }
+
+    this.request = request;
+    this.deviceList = this.request.deviceList;
+    this.allowDeviceRemove = (this.isEditable || this.request.status <= StatusEnum.CUSTOMER_APPROVAL);
   }
 
   updateStatus(device : Device){
 
   }
 
-  undoRequest(device: Device){
+  removeDevice(device: Device){
 
     this.deactivateService.removeDeviceFromRequest(device).subscribe(resp => {
       if(resp == true){
@@ -49,6 +68,8 @@ export class DeviceTableComponent implements OnInit {
     for(let d of this.deviceList){
       d.fee = fee;
     }
+
+    this.updateDeviceFees(fee);
   }
 
   updateDeviceFees(value: number){

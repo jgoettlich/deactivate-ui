@@ -14,6 +14,8 @@ export class RequestDetailsComponent implements OnInit {
 
   isManager: boolean = false;
   requestDetails : DeactivateRequest = null;
+  requestId: string = null;
+  lineFee: number;
 
   @ViewChild('deviceTable') deviceTable : DeviceTableComponent;
 
@@ -39,7 +41,7 @@ export class RequestDetailsComponent implements OnInit {
       };
 
       this.activatedRoute.queryParams.subscribe(params => {
-        this.requestDetails.requestId = params['requestId'];
+        this.requestId = params['requestId'];
       });
   }
 
@@ -50,12 +52,13 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   getRequestDetails() {
-    if(this.requestDetails.requestId == ''){
+    if(this.requestId == ''){
       return;
     }
 
-    this.deactivateService.getDeactivateRequest(this.requestDetails.requestId).subscribe(request => {
+    this.deactivateService.getDeactivateRequest(this.requestId).subscribe(request => {
       this.requestDetails = request;
+      this.deviceTable.setRequest(request);
     });
   }
 
@@ -70,6 +73,11 @@ export class RequestDetailsComponent implements OnInit {
   sumLines(){
     this.requestDetails.fee = this.deviceTable.calculateSum();
     this.deactivateService.updateRequest(this.requestDetails).subscribe(response => {});
+  }
+
+  updateLineFees(value: number){
+    this.deviceTable.setDeviceFees(value);
+    this.sumLines();
   }
 
 }

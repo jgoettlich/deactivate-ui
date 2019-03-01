@@ -1,143 +1,165 @@
-<div class='container-fluid'>
-  <div class="row">
-    <div class="container-fluid">
-      <div class="contractData">
-        <div>
-          <h3>Contract Data:</h3>
+<div class='container-fluid topSpacer'>
+  <div [class.hidden]="requestStep != 0">
+    <div class="row">
+      <app-deactivate-form #requestForm></app-deactivate-form>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <button class="btn btn-outline-dark" (click)="selectDevicesClick()">Select Devices</button>
+      </div>
+    </div>
+  </div>
+
+  <div [class.hidden]="requestStep != 1">
+    <div class="row">
+      <div class="col-2">
+        <button class="btn btn-outline-dark" (click)="backToForm()">Back</button>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col deviceTable">
+        <div class="row">
+          <div class="col">
+            <h4>Select Devices to Deactivate</h4>
+          </div>
+          <div class="col">
+            <div class="right">
+              <button class="btn btn-outline-dark" (click)="open(content)" title="">Mass Upload</button>
+            </div>
+          </div>
         </div>
-        <div class="contractTable">
+
+        <div>
+          <app-loading-container [ngClass]="{'': showDeviceLoading, hidden: !showDeviceLoading}"></app-loading-container>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Company Id</th>
+                <th>Truck Number</th>
+                <th>DSN</th>
+                <th>Rate Plan</th>
+                <th>Billing Start Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let device of deviceList" (click)="addRow(device)">
+                <td>{{device.cid}}</td>
+                <td>{{device.trucknum}}</td>
+                <td>{{device.dsn}}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pageBtns">
+          <div class="prevBtn" (click)="getPreviousPage()">
+            <button class="btn btn-link">Previous Page</button>
+          </div>
+          <div class="nextBtn" (click)="getNextPage()">
+            <button class="btn btn-link">Next Page</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col deviceTable">
+        <div>
+          <h4>Units Pending Deactivation</h4>
+        </div>
+        <div>
+          <app-loading-container [ngClass]="{'': showSwapLoading, hidden: !showSwapLoading}"></app-loading-container>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Truck Number</th>
+                <th>DSN</th>
+                <th>Status</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let device of selectedDeviceList">
+                <td>{{device.trucknum}}</td>
+                <td>{{device.dsn}}</td>
+                <td *ngIf="isEditable">Pending Approval</td>
+                <td *ngIf="!isEditable">
+                  <select [(ngModel)]="device.status">
+                    <option value="0">Pending Approval</option>
+                    <option value="1">Pending Wireless Deactivation</option>
+                    <option value="2">Removed</option>
+                  </select>
+                </td>
+                <td (click)="removeRow(device)">Remove</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col spacerTop15">
+        <button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="deactivateDevices(); open(confirmDialog)">Submit
+          Request
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Enter truck names on seperate lines</h4>
+    </div>
+    <div class="modal-body">
+      <div [ngClass]="{blockScroll:!isProcessing, hidden: isProcessing}">
+        <textarea name="trucknumList" class="trucknumList" placeholder="trucknums" [(ngModel)]="truckListStr"></textarea>
+      </div>
+      <div>
+        <div [ngClass]="{blockScroll:isProcessing, hidden: !isProcessing}">
+          <app-loading-container [ngClass]="{'': showModalLoading, hidden: !showModalLoading}"></app-loading-container>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Bad Truck Numbers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let name of badNames">
+                <td>{{name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="processTrucks()" [disabled]="isProcessing">Process</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #confirmDialog let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Submitting Request</h4>
+    </div>
+    <div class="modal-body">
+      <div class="confirmationBody">
+        <app-loading-container [class.hidden]="requestId != null"></app-loading-container>
+        <div [class.hidden]="requestId == null">
           <div>
-            <table class="myTable">
-              <tr>
-                <th>Contracted Unit Count</th>
-                <th>Active Unit Count</th>
-              </tr>
-              <tr>
-                <td>1500</td>
-                <td>1505</td>
-              </tr>
-            </table>
+            <label>Your request has been submitted for processing.</label>
+          </div>
+          <div>
+            <p>Request Id: <b>{{requestId}}</b></p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="container-fluid">
-      <div><label>Requested Deactivation Date:</label></div>
-      <div>
-        <div style="float:left;">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="requestedDate">
-        </div>
-        <div style="float:left;">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </div>
-              
-      </div>
-    </div>
-          
-  </div>
-<div class="row">
-<div class="col deviceTable">
-  <div><h3>Select Devices to Deactivate</h3></div>
-  <button class="btn btn-outline-dark" (click)="open(content)">Mass Upload</button>
-  
-    <div>
-      <app-loading-container [ngClass]="{'': showDeviceLoading, hidden: !showDeviceLoading}"></app-loading-container>
-      <table class="myTable">
-        <tr>
-          <th>Truck Number</th>
-          <th>DSN</th>
-          <th>Company Id</th>
-          <th>Contract Start Date</th>
-          <th>Contract End Date</th>
-        </tr>
-        <tr *ngFor="let device of deviceList" (click)="addRow(device)">
-          <td>{{device.trucknum}}</td>
-          <td>{{device.dsn}}</td>
-          <td>{{device.cid}}</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-  <div class="pageBtns">
-      <div class="prevBtn" (click)="getPreviousPage()">
-          <label>Prev Page</label>
-        </div>
-    <div class="nextBtn" (click)="getNextPage()">
-      <label>Next Page</label>
-    </div>
-  </div>
-</div>
-
-<div class="col deviceTable">
-  <div><h3>Units Pending Deactivation</h3></div>
-  <div><button class="btn btn-outline-dark" [disabled]="!selectedDeviceList.length" (click)="deactivateDevices()">Deactivate Devices</button></div>
-  <div>
-    <app-loading-container [ngClass]="{'': showSwapLoading, hidden: !showSwapLoading}"></app-loading-container>
-    <table class="myTable">
-      <tr>
-        <th>Truck Number</th>
-        <th>DSN</th>
-        <th>Status</th>
-        <th>Remove</th>
-      </tr>
-      <tr *ngFor="let device of selectedDeviceList" >
-        <td>{{device.trucknum}}</td>
-        <td>{{device.dsn}}</td>
-        <td *ngIf="isEditable">Pending Approval</td>
-        <td *ngIf="!isEditable">
-          <select [(ngModel)]="device.status">
-            <option value="0">Pending Approval</option>
-            <option value="1">Pending Wireless Deactivation</option>
-            <option value="2">Removed</option>
-          </select>
-        </td>
-        <td (click)="removeRow(device)">Remove</td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-</div>
-<div class="row">
-  <div class="container-fluid">
-    <div class="form-group">
-      <h3>Request Notes:</h3>
-      <textarea class="form-control" [(ngModel)]="requestNotes"></textarea>
-    </div>
-  </div>
-</div>
-
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Enter truck names on seperate lines</h4>
-  </div>
-  <div class="modal-body">
-    <div [ngClass]="{blockScroll:!isProcessing, hidden: isProcessing}">
-      <textarea name="trucknumList" class="trucknumList" placeholder="trucknums" [(ngModel)]="truckListStr"></textarea>
-    </div>
-    <div>
-      <div [ngClass]="{blockScroll:isProcessing, hidden: !isProcessing}">
-          <app-loading-container [ngClass]="{'': showModalLoading, hidden: !showModalLoading}"></app-loading-container>
-          <table class="myTable">
-            <tr>
-              <th>Bad Truck Numbers</th>
-            </tr>
-            <tr *ngFor="let name of badNames">
-              <td>{{name}}</td>
-            </tr>
-          </table>
-        </div>
-      <div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="processTrucks()" [disabled]="isProcessing">Process</button>
+    <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
-  </div>
-</ng-template>
+    </div>
+  </ng-template>
 </div>

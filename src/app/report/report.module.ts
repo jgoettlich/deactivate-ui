@@ -8,20 +8,26 @@ import { ReportHomeComponent } from '../report-home/report-home.component';
 import { LoadingContainerComponent } from '../loading-container/loading-container.component';
 import { DeviceTableComponent } from '../device-table/device-table.component';
 import { RequestDetailsComponent } from '../request-details/request-details.component';
+import { RequestStatusComponent } from '../request-status/request-status.component';
+import { RequestReasonComponent } from '../request-reason/request-reason.component';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
   declarations: [
     ReportHomeComponent,
     DeactivationReportComponent,
     DeviceTableComponent,
     LoadingContainerComponent,
-    RequestDetailsComponent
+    RequestDetailsComponent,
+    RequestStatusComponent,
+    RequestReasonComponent
   ],
   exports: [
     DeactivationReportComponent,

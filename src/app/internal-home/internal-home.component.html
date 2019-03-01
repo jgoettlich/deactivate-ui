@@ -4,6 +4,7 @@
       <a class="nav-item nav-link clickable" [class.active]="tabShown==0" (click)="changeTab(0)">Pending Deactivations</a>
       <a class="nav-item nav-link clickable" [class.active]="tabShown==1" (click)="changeTab(1)">Deactivated Devices</a>
       <a class="nav-item nav-link clickable" [class.active]="tabShown==2" (click)="changeTab(2)">Customer Info</a>
+      <a class="nav-item nav-link clickable" [class.active]="tabShown==3" (click)="changeTab(3)">ETF Estimater</a>
     </div>
   </div>
 </nav>
@@ -14,4 +15,7 @@
   <div [ngClass]="{'': tabShown == 2, hidden: tabShown != 2}">
     <app-customer-info></app-customer-info>
   </div>
+  <div [ngClass]="{'': tabShown == 3, hidden: tabShown != 3}">
+      <app-etf-estimater></app-etf-estimater>
+    </div>
 </div>

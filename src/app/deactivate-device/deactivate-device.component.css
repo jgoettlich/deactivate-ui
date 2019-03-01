@@ -3,10 +3,22 @@
     width: 80%;
 }
 
+.blue {
+    color: blue;
+}
+
 .center {
     clear: both;
     text-align: center;
     width: 100%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }
 
 .selectableContainer {
@@ -91,4 +103,22 @@
     width: 70%;
     margin-left: 15%;
     margin-right: 15%;
+}
+
+.topSpacer {
+    margin-top: 5px;
+}
+
+.spacerTop15 {
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.confirmationBody {
+    min-height: 150px;
+    min-width: 150px;
+    display: inline-block;
 }

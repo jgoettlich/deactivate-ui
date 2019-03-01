@@ -1,0 +1,15 @@
+<div>
+    <div *ngIf="!isEditable">
+        <label *ngIf="reason == 0">Churn</label>
+        <label *ngIf="reason == 1">RMA</label>
+        <label *ngIf="reason == 2">Return</label>
+        <label *ngIf="reason == 3">Other</label>
+    </div>
+  <div *ngIf="isEditable">
+      <select [(ngModel)]="reason" (ngModelChange)="updateReason()">
+          <option value="0">Churn</option>
+          <option value="1">RMA</option>
+          <option value="2">Return</option>
+          <option value="3">Other</option>
+        </select>
+  </div>

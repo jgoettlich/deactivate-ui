@@ -13,7 +13,13 @@ export class AppComponent {
   companySelect: string = '';
 
   constructor(private customerService: CustomerService){
+    
+    this.checkUser();
     this.getCustomerList('');
+  }
+
+  checkUser() {
+
   }
 
   getCustomerList(query: string){

@@ -22,6 +22,7 @@ export class CustomerInfo {
     lastReviewDate: string;
     reviewNotes: string;
     unitContractDiff: number;
+    accountManager: string;
 
     loadData(data: any){
         this.companyId              = data.companyId;
@@ -47,5 +48,6 @@ export class CustomerInfo {
         this.lastReviewDate          = data.lastReviewDate;
         this.reviewNotes             = data.reviewNotes;
         this.unitContractDiff        = data.unitContractDiff;
+        this.accountManager          = data.accountManager;
     }
 }

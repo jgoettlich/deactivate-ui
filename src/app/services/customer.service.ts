@@ -51,4 +51,22 @@ export class CustomerService {
         
         return this.http.get(fullUrl, this.httpOptions);
     }
+
+    getCustomerContractData(companyId: number): Observable<any> {
+        let fullUrl = `${this.baseUrl}getCustomerContractData?companyId=${companyId}`;
+        
+        return this.http.get(fullUrl, this.httpOptions);
+    }
+
+    validateSession(session: string): Observable<any> {
+        let fullUrl = `${this.baseUrl}validateSession`;
+        this.httpOptions = {
+            headers: {
+                'Access-Control-Allow-Origin':'*',
+                'x-access-token' : session
+            }
+        };
+
+        return this.http.get(fullUrl, this.httpOptions);
+    }
 }

@@ -3,129 +3,135 @@
     <button class="btn btn-outline-dark" (click)="close()">Back</button>
   </div>
   <div class="row">
-    <div class="col-3">
-      <div class="row">
-      <div class="headerContainer"><h3>Request Details:</h3></div>
-        <div class="ds-group  ds-light-grey">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Request Details</h3>
+        </div>
+        <div class="card-body">
           <div class="row">
-            <div class="col-sm">
+            <div class="col">
               <label>Company ID:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.cid}}</p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
-              <label>Status:</label>
-            </div>
-            <div class="col-sm">
-              <p>{{requestDetails.status}}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
-              <label>Reason:</label>
-            </div>
-            <div class="col-sm">
-              <p>{{requestDetails.reason}}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
+            <div class="w-100"></div>
+            <div class="col">
               <label>Created Date:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.createdDate}}</p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
+            <div class="w-100"></div>
+            <div class="col">
               <label>Requested Date:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.requestedDate}}</p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
+            <div class="w-100"></div>
+            <div class="col">
               <label>Completed Date:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.completedDate}}</p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
+            <div class="w-100"></div>
+            <div class="col">
               <label>Requested By:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.username}}</p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
+            <div class="w-100"></div>
+            <div class="col">
               <label>Device Count:</label>
             </div>
-            <div class="col-sm">
+            <div class="col">
               <p>{{requestDetails.deviceList.length}}</p>
             </div>
-          </div>
-        </div>
-        </div>
-        <div class="row">
-          <div class="headerContainer">
-            <h3>Deactivation Fees:</h3>
-          </div>
-          <div class="ds-group">
-            <div class="row">
-              <div class="col">
-                <label>Total Fee:</label>
-              </div>
-              <div *ngIf="!isManager" class="col">
-                <p>{{requestDetails.fee}}</p>
-              </div>
-              <div *ngIf="isManager" class="col">
-                  <input [(value)]="requestDetails.fee" />
-                </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Status:</label>
             </div>
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-outline-dark" (click)="sumLines()">Calculate</button>
-              </div>
+            <div class="col">
+              <app-request-status [isEditable]="isManager" [requestId]="requestDetails.requestId"
+                [status]="requestDetails.status"></app-request-status>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Reason:</label>
+            </div>
+            <div class="col">
+              <app-request-reason [isEditable]="isManager" [requestId]="requestDetails.requestId"
+                [reason]="requestDetails.reason"></app-request-reason>
             </div>
           </div>
         </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Deactivation Fees</h3>
         </div>
-        <div class="col">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <label>Total Fee:</label>
+            </div>
+            <div *ngIf="!isManager" class="col">
+              <p>{{requestDetails.fee}}</p>
+            </div>
+            <div *ngIf="isManager" class="col">
+              <input type="number" [(value)]="requestDetails.fee" />
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <button class="btn btn-outline-dark" (click)="sumLines()">Sum Lines</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
       <div class="row">
         <div class="col">
-          <div class="row">
-            <h3>Customer Notes:</h3>
-          </div>
-          <div class="row">
-            <textarea *ngIf="!isManager" [ngModel]="requestDetails.cust_notes"></textarea>
-            <p *ngIf="isManager">{{requestDetails.cust_notes}}</p>
+          <div class="card">
+            <div class="card-header">
+              <h3>Customer Notes</h3>
+            </div>
+            <div class="card-body">
+              <textarea *ngIf="!isManager" [ngModel]="requestDetails.cust_notes"></textarea>
+              <div *ngIf="isManager">
+                <p class="displayNotes">{{requestDetails.cust_notes}}</p>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col">
-          <div class="row">
-            <h3>Customer Manager Notes:</h3>
-          </div>
-          <div class="row">
-            <p *ngIf="!isManager">{{requestDetails.cm_notes}}</p>
-            <textarea *ngIf="isManager" [ngModel]="requestDetails.cm_notes"></textarea>
+          <div class="card">
+            <div class="card-header">
+              <h3>Customer Manager Notes</h3>
+            </div>
+            <div class="card-body">
+              <div *ngIf="!isManager">
+                <p class="displayNotes">{{requestDetails.cm_notes}}</p>
+              </div>
+              <textarea *ngIf="isManager" [ngModel]="requestDetails.cm_notes"></textarea>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class=""></div>
         <div class="container-fluid">
-          <div class="row">
-            <h3>Device List</h3>
-          </div>
-          <div class="row">
-            <app-device-table #deviceTable [deviceList]="requestDetails.deviceList"></app-device-table>
+          <div class="card">
+            <div class="card-header">
+              <h3>Device List</h3>
+            </div>
+            <div class="card-body">
+              <app-device-table #deviceTable [request]="requestDetails"></app-device-table>
+            </div>
           </div>
         </div>
       </div>

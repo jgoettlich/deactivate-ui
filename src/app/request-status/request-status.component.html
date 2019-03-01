@@ -1,0 +1,15 @@
+<div>
+  <div *ngIf="!isEditable">
+    <label *ngIf="status == 0">Pending Approval</label>
+    <label *ngIf="status == 1">Customer Confirm</label>
+    <label *ngIf="status == 2">Pending Wireless Deactivation</label>
+    <label *ngIf="status == 3">Removed</label>
+  </div>
+<div *ngIf="isEditable">
+    <select [(ngModel)]="status" (ngModelChange)="updateStatus()">
+        <option value="0">Pending Approval</option>
+        <option value="1">Customer Confirm</option>
+        <option value="2">Pending Wireless Deactivation</option>
+        <option value="3">Removed</option>
+      </select>
+</div>

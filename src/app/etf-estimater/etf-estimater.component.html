@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">ETF Calculator:</h5>
+          <div class="row">
+            <div class="col">
+              <label>Fixed ETF:</label>
+            </div>
+            <div class="col"><input type="number" [(ngModel)]="fixedEtf" (ngModelChange)="updateLineFees($event)" /></div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Monthly Rate Plan:</label>
+            </div>
+            <div class="col">
+              <input type="number" [(ngModel)]="monthlyRatePlan" (ngModelChange)="updateLineFees($event)" />
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Unit Suspended Months:</label>
+            </div>
+            <div class="col">
+              <input type="number" [(ngModel)]="unitSuspendedMonths" (ngModelChange)="updateLineFees($event)" />
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Month Churning:</label>
+            </div>
+            <div class="col">
+              <div>
+                <input matInput [matDatepicker]="picker" id="monthChurningField" placeholder="Choose a date" aria-describedby="dateHelp" [(ngModel)]="monthChurning">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year" (monthSelected)="chosenMonthHandler($event, picker)"></mat-datepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <label>Company ID:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.companyId}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Company Name:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.companyName}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Parent Company ID:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.companyId}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Parent Company Name:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.parentName}}</p>
+            </div>
+
+            <div class="w-100"></div>
+            <div class="col"><label>Customer Manager:</label></div>
+            <div class="col">
+              <p>{{customerInfo.customerManager}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col"><label>Account Manager:</label></div>
+            <div class="col">
+              <p>{{customerInfo.accountManager}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col"><label>Sales Rep:</label></div>
+            <div class="col">
+              <p>{{customerInfo.salesRep}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col"><label>Customer Type:</label></div>
+            <div class="col">
+              <p>{{customerInfo.customerType}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Open OBC RMA(s)</h5>
+          <div class="row">
+            <div class="col">
+              <label>Return Only:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.returnOnly}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Standard RMA:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.standardRma}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>MM Upgrade:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.mmUpgrade}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <label>Total OBC Count:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.obcCount}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>OBC Count As Of:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.obcCountAsOf}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Customer Data As Of:</label>
+            </div>
+            <div class="col">
+              <p>{{customerInfo.custDateAsOf}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+          <div class="col">
+              <label>Service Subtotal:</label>
+            </div>
+            <div class="col">
+              <p>{{serviceSubTotal}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Suspended Extension Subtotal:</label>
+            </div>
+            <div class="col">
+              <p>{{suspendedExtensionSubtotal}}</p>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <label>Pre-Tax Total:</label>
+            </div>
+            <div class="col">
+              <p>{{preTaxTotal}}</p>
+            </div>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Contract Type</th>
+              <th>Contract End</th>
+              <th>Terms</th>
+              <th>Terms (less Churn)</th>
+              <th>Months Remaining</th>
+              <th>Per Unit Term Fee</th>
+              <th>Total Term Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cd of contractData">
+              <td>{{cd.month}}</td>
+              <td>{{cd.contractType}}</td>
+              <td>{{cd.contractEnd | date : 'MM/dd/yyyy'}}</td>
+              <td>{{cd.terms}}</td>
+              <td>{{cd.termsLessChurn}}</td>
+              <td>{{cd.monthsRemaining}}</td>
+              <td>{{cd.perUnitTermFee}}</td>
+              <td>{{cd.totalTermFee}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <label>Grand Total: {{termTotal}}</label>
+      </div>
+    </div>
+  </div>
+</div>

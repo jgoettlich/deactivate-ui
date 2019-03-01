@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DeactivateService } from '../services/deactivate.service';
 import { Device } from '../model/device';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeactivateRequest } from '../model/DeactivateRequest';
 import { CustomerService } from '../services/customer.service';
 import { MatNativeDateModule } from '@angular/material';
+import { DeactivateFormComponent } from '../deactivate-form/deactivate-form.component';
 
 @Component({
   selector: 'app-deactivate-device',
@@ -26,8 +27,11 @@ export class DeactivateDeviceComponent implements OnInit {
   showSwapLoading: boolean      = false;
   pageBtnClicked: boolean       = false;
   isEditable: boolean           = false;
-  requestNotes: string          = "";
-  requestedDate: Date           = null;
+  requestStep: number           = 0;
+  requestId: string             = null;
+
+  @ViewChild("requestForm") requestForm : DeactivateFormComponent;
+  @ViewChild("confirmDialog") confirmDialog : any;
 
   constructor(private deactivateService: DeactivateService,
     private modalService: NgbModal,
@@ -149,8 +153,8 @@ export class DeactivateDeviceComponent implements OnInit {
       let deactivateRequest: DeactivateRequest = {
         sessionId: '',
         cid: this.customerService.getCompanyId(),
-        cm_notes: (this.isEditable)? this.requestNotes : null,
-        cust_notes: (!this.isEditable)? this.requestNotes : null,
+        cm_notes: (this.isEditable)? this.requestForm.requestNotes : null,
+        cust_notes: (!this.isEditable)? this.requestForm.requestNotes : null,
         completedDate: null,
         reason: 0,
         createdDate: null,
@@ -160,16 +164,24 @@ export class DeactivateDeviceComponent implements OnInit {
         username: '',
         deviceList: this.selectedDeviceList,
         fee: 0,
-        requestedDate: this.requestedDate
+        requestedDate: this.requestForm.requestedDate
       };
 
       this.deactivateService.deactivateDevice(deactivateRequest).subscribe(response => {
-        // Handle Response
         this.selectedDeviceList = [];
+        this.requestId = response;
       });
   }
 
   confirmRequest() {
 
+  }
+
+  selectDevicesClick() {
+    this.requestStep = 1;
+  }
+
+  backToForm() {
+    this.requestStep = 0;
   }
 }

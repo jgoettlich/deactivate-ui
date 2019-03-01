@@ -4,6 +4,7 @@ import { CustomerService } from '../services/customer.service';
 import { DeviceTableComponent } from '../device-table/device-table.component';
 import { DeactivateRequest } from '../model/DeactivateRequest';
 import { Router, ActivatedRoute } from '@angular/router';
+import { StatusEnum } from '../model/StatusEnum';
 
 @Component({
   selector: 'app-deactivation-report',
@@ -23,6 +24,7 @@ export class DeactivationReportComponent implements OnInit {
   sortAsc: boolean = true;
   filterColumn: string = null;
   filterValue: any = null;
+  customerBtnTxt: string[] = ['Undo', 'Approve'];
 
   @ViewChild("deviceTable") deviceTable : DeviceTableComponent;
 
@@ -90,11 +92,29 @@ export class DeactivationReportComponent implements OnInit {
     this.deactivateService.updateRequest(request).subscribe(response => {});
   }
 
+  customerBtnClick(request: DeactivateRequest) {
+    switch(request.status)
+    {
+      case StatusEnum.PENDING_APPROVAL:
+        this.undoRequest(request);
+      break;
+      case StatusEnum.CUSTOMER_APPROVAL:
+        this.approveFee(request);
+      break;
+      default:
+      break;
+    }
+  }
+
   undoRequest(request: DeactivateRequest){
     this.deactivateService.cancelRequest(request).subscribe(resp => {
       this.clearIfEmpty = true;
       this.getReport();
     });
+  }
+
+  approveFee(request: DeactivateRequest) {
+    request.status = StatusEnum.PENDING_WIRELSS;
   }
 
   cancelRequest(request: DeactivateRequest) {

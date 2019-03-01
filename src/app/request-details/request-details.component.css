@@ -23,3 +23,14 @@ textarea {
     width: 100%;
     margin-left: 10px;
 }
+
+.align-left {
+    width: 100%;
+    text-align: left;
+}
+
+.displayNotes {
+    width: 90%;
+    height: 315px;
+    overflow-y: scroll;
+}

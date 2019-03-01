@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="container-fluid">
+  <div class="col">
     <div class="left"><button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button></div>
     <div class="right"><button class="btn btn-outline-dark" (click)="createNewRequest()">New Request</button></div>
   </div>
@@ -9,7 +9,8 @@
   <div class="col reportTable">
       <div>
         <app-loading-container [ngClass]="{'': showReportLoading, hidden: !showReportLoading}"></app-loading-container>
-        <table class="myTable">
+        <table class="table table-striped table-bordered table-condensed">
+          <thead>
           <tr>
             <th>Company Id</th>
             <th (click)="setSort('status')">Status <i id="statusArrows" class="fa fa-fw fa-sort"></i></th>
@@ -22,39 +23,20 @@
             <th (click)="setSort('username')">Requested By <i id="usernameArrows" class="fa fa-fw fa-sort"></i></th>
             <th>Device Count</th>
             <th>Deactivate Fee</th>
-            <th *ngIf="!isEditable">Undo</th>
+            <th *ngIf="!isEditable">Action</th>
             <th *ngIf="isEditable">Cancel</th>
             <th *ngIf="isEditable">Confirm</th>
           </tr>
+        </thead>
+        <tbody>
           <ng-container *ngFor="let request of requestList">
           <tr>
-            <td (click)="viewDetails(request)">{{request.cid}}</td>
-            <td *ngIf="isEditable">
-              <select [(ngModel)]="request.status" (ngModelChange)="updateStatus(request)" >
-                <option value="0">Pending Approval</option>
-                <option value="1">Pending Wireless Deactivation</option>
-                <option value="2">Removed</option>
-              </select>
+            <td><button class="btn btn-link" (click)="viewDetails(request)">{{request.cid}}</button></td>
+            <td>
+              <app-request-status [isEditable]="isEditable" [requestId]="request.requestId" [status]="request.status" ></app-request-status>
             </td>
-            <td *ngIf="!isEditable">
-              <label *ngIf="request.status == 0">Pending Approval</label>
-              <label *ngIf="request.status == 1">Customer Confirm</label>
-              <label *ngIf="request.status == 2">Pending Wireless Deactivation</label>
-              <label *ngIf="request.status == 3">Removed</label>
-            </td>
-            <td *ngIf="isEditable">
-              <select [(ngModel)]="request.reason">
-                <option value="0">Churn</option>
-                <option value="1">RMA</option>
-                <option value="2">Return</option>
-                <option value="3">Other</option>
-              </select>
-            </td>
-            <td *ngIf="!isEditable">
-              <label *ngIf="request.reason == 0">Churn</label>
-              <label *ngIf="request.reason == 1">RMA</label>
-              <label *ngIf="request.reason == 2">Return</label>
-              <label *ngIf="request.reason == 3">Other</label>
+            <td>
+              <app-request-reason [isEditable]="isEditable" [requestId]="request.requestId" [reason]="request.reason"></app-request-reason>
             </td>
             <td>
               <textarea [(ngModel)]="request.cust_notes"></textarea>
@@ -69,14 +51,16 @@
             <td (click)="viewDetails(request)">{{request.deviceList.length}}</td>
             <td>{{request.fee}}</td>
             <td *ngIf="!isEditable">
-              <button title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" [disabled]="request.status != 0" (click)="undoRequest(request)">
-                Undo
+              <button *ngIf="request.status <= 1" title="Unavailable if approved by CM" class="btn btn-sm btn-outline-dark" 
+              [disabled]="request.status > 1" (click)="customerBtnClick(request)">
+                {{customerBtnTxt[request.status]}}
               </button>
             </td>
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="cancelRequest(request)">Cancel</button></td>
             <td *ngIf="isEditable"><button class="btn btn-sm btn-outline-dark" (click)="confirmRequest(request)">Confirm</button></td>
           </tr>
         </ng-container>
+      </tbody>
         </table>
       </div>
     <div class="pageBtns">

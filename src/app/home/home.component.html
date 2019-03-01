@@ -14,29 +14,33 @@
           <label>Total units pending deactivation: {{deactivationCount}}</label>
         </div>
         <div>
-          <table class="myTable">
-            <tr>
-              <th>Pending Requests:</th>
-              <th>Waiting Customer Approval:</th>
-              <th>Pending Wireless Deactivation:</th>
-            </tr>
-            <tr *ngIf="summaryList.length >= 3">
-              <td>
-                <button class="btn btn-link" (click)="viewStatusReport(0)">
-                  {{summaryList[0].requestCount}} Requests, {{summaryList[0].deviceCount}} Devices
-                </button>
-              </td>
-              <td>
-                <button class="btn btn-link" (click)="viewStatusReport(1)">
-                  {{summaryList[1].requestCount}} Requests, {{summaryList[1].deviceCount}} Devices
-                </button>
-              </td>
-              <td>
-                <button class="btn btn-link"(click)="viewStatusReport(2)">
-                  {{summaryList[2].requestCount}} Requests, {{summaryList[2].deviceCount}} Devices
-                </button>
-              </td>
-            </tr>
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Pending Requests:</th>
+                <th>Waiting Customer Approval:</th>
+                <th>Pending Wireless Deactivation:</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="summaryList.length >= 3">
+                <td>
+                  <button class="btn btn-link" (click)="viewStatusReport(0)">
+                    {{summaryList[0].requestCount}} Requests, {{summaryList[0].deviceCount}} Devices
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-link" (click)="viewStatusReport(1)">
+                    {{summaryList[1].requestCount}} Requests, {{summaryList[1].deviceCount}} Devices
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-link" (click)="viewStatusReport(2)">
+                    {{summaryList[2].requestCount}} Requests, {{summaryList[2].deviceCount}} Devices
+                  </button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

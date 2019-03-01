@@ -8,7 +8,7 @@ import { CustomerInfoComponent } from '../customer-info/customer-info.component'
   styleUrls: ['./internal-home.component.css']
 })
 export class InternalHomeComponent implements OnInit {
-  tabShown: number = 0;
+  tabShown: number = 3;
   @ViewChild("pendingReport") pendingReport: DeactivationReportComponent;
 
   constructor() { }

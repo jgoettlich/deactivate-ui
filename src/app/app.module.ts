@@ -15,10 +15,12 @@ import { ReportModule } from './report/report.module';
 import { InternalHomeComponent } from './internal-home/internal-home.component';
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
 import { RequestDetailsComponent } from './request-details/request-details.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { EtfEstimaterComponent } from './etf-estimater/etf-estimater.component';
+import { DeactivateFormComponent } from './deactivate-form/deactivate-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     HomeComponent,
     DeactivateDeviceComponent,
     InternalHomeComponent,
-    CustomerInfoComponent
+    CustomerInfoComponent,
+    EtfEstimaterComponent,
+    DeactivateFormComponent
   ],
   imports: [
     BrowserModule,

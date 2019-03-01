@@ -1,196 +1,223 @@
 <div class="row">
-  <div class='col-3'>
-    <form>
-      <div class="ds-group ds-black">
-      <div class="row">
-        <div class="col-sm">
-          <label>Company ID:</label>
+    <div class='col-3'>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label>Company ID:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.companyId}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <label>Company Name:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.companyName}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <label>Parent Company ID:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.companyId}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <label>Parent Company Name:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.parentName}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm">
-            <p >{{customerInfo.companyId}}</p>
-          </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-          <label>Company Name:</label>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">OBC Count - Open RMAs</h5>
+                <div class="row">
+                    <div class="col">
+                        <label>Adjusted OCB Count:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.adjustedObcCount}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm">
-            <p>{{customerInfo.companyName}}</p>
-          </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-            <label>Parent Company ID:</label>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label>OBC Count:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.obcCount}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col"><label>**Safety Stock:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.safetyStock}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col"><label>Customer Manager:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.customerManager}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col"><label>RAM/NAR/VAS:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.ramNasVas}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col"><label>Sales Rep:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.salesRep}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col"><label>Customer Type:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.customerType}}</p>
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col"><label>Rate Plan:</label></div>
+                    <div class="col">
+                        <p>{{customerInfo.ratePlan}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm">
-            <p>{{customerInfo.companyId}}</p>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label>Unit Suspended Months:</label>
+                    </div>
+                    <div class="col">
+                        <p>{{customerInfo.unitSuspendedMonths}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col ds-center"><label>Calculated into Account Churn</label></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Open OBC RMA(s)</h5>
+                    <div class="row">
+                        <div class="col">
+                            <label>Return Only:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.returnOnly}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>Standard RMA:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.standardRma}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>MM Upgrade:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.mmUpgrade}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label>Predates NetSuite:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.predatesNetsuite}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>OBC Count As Of:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.obcCountAsOf}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>Customer Data As Of:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.custDateAsOf}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label>Contract Review Complete:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.contactReviewComplete}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>Last Review Date:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.lastReviewDate}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>Review Notes:</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.reviewNotes}}</p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <label>Unit: Contract, % Diff</label>
+                        </div>
+                        <div class="col">
+                            <p>{{customerInfo.unitContractDiff}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-            <label>Parent Company Name:</label>
-        </div>
-        <div class="col-sm">
-          <p>{{customerInfo.parentName}}</p>
-        </div>
-      </div>
     </div>
-    <div class="ds-group ds-dark-grey">
-      <div class="row">
-        <div class="col-sm">
-            <label>Adjusted OCB Count:</label>
-            <label>(OBC Count - Open RMAs)</label>
-          </div>
-        <div class="col-sm">
-          <p>{{customerInfo.adjustedObcCount}}</p>
-        </div>
-      </div>
+    <div class="col">
+        <h1>Term Summary</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Term Year</th>
+                    <th>Term Month</th>
+                    <th>Contract Type</th>
+                    <th>Term Years</th>
+                    <th>Auto Renewal</th>
+                    <th>Within 6 Months</th>
+                    <th>Within 18 Months</th>
+                    <th>Churn / Return</th>
+                    <th>Grand Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2014</td>
+                    <td>5</td>
+                    <td>MPA or Add-On</td>
+                    <td>4</td>
+                    <td>1500</td>
+                    <td>0</td>
+                    <td>12</td>
+                    <td>-5</td>
+                    <td>1499</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="ds-group ds-grey">
-      <div class="row">
-        <div class="col-sm">
-        <label>OBC Count:</label>
-        </div>
-        <div class="col-sm"><p>{{customerInfo.obcCount}}</p></div>
-      </div>
-      <div class="row">
-        <div class="col-sm"><label>**Safety Stock:</label></div>
-        <div class="col-sm"><p>{{customerInfo.safetyStock}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm"><label>Customer Manager:</label></div>
-          <div class="col-sm"><p>{{customerInfo.customerManager}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm"><label>RAM/NAR/VAS:</label></div>
-          <div class="col-sm"><p>{{customerInfo.ramNasVas}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm"><label>Sales Rep:</label></div>
-          <div class="col-sm"><p>{{customerInfo.salesRep}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm"><label>Customer Type:</label></div>
-          <div class="col-sm"><p>{{customerInfo.customerType}}</p></div>
-      </div>
-    </div>
-    <div class="ds-group ds-grey">
-      <div class="row">
-          <div class="col"><label>Rate Plan:</label></div>
-      </div>
-    <div class="row">
-        <div class="col ds-center">
-            <p>{{customerInfo.ratePlan}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="ds-group ds-red">
-      <div class="row">
-          <div class="col-sm">
-              <label>Unit Suspended Months:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.unitSuspendedMonths}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col ds-center"><label>Calculated into Account Churn</label></div>
-      </div>
-    </div>
-    <div class="ds-group ds-grey">
-        <div class="row">
-            <div class="col ds-center"><label>Open OBC RMA(s)</label></div>
-        </div>
-      <div class="row">
-        <div class="col-sm">
-            <label>Return Only:</label>
-        </div>
-          <div class="col-sm"><p>{{customerInfo.returnOnly}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>Standard RMA:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.standardRma}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>MM Upgrade:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.mmUpgrade}}</p></div>
-      </div>
-    </div>
-    <div class="ds-group ds-light-grey">
-      <div class="row">
-          <div class="col-sm">
-              <label>Predates NetSuite:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.predatesNetsuite}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>OBC Count As Of:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.obcCountAsOf}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>Customer Data As Of:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.custDateAsOf}}</p></div>
-      </div>
-    </div>
-    <div class="ds-group ds-light-grey">
-      <div class="row">
-          <div class="col-sm">
-              <label>Contract Review Complete:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.contactReviewComplete}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-            <label>Last Review Date:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.lastReviewDate}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>Review Notes:</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.reviewNotes}}</p></div>
-      </div>
-      <div class="row">
-          <div class="col-sm">
-              <label>Unit: Contract, % Diff</label>
-          </div>
-          <div class="col-sm"><p>{{customerInfo.unitContractDiff}}</p></div>
-      </div>
-    </div>
-    </form>
-  </div>
-  <div class="col">
-    <h1>Term Summary</h1>
-    <table class="myTable">
-      <tr>
-        <th>Term Year</th>
-        <th>Term Month</th>
-        <th>Contract Type</th>
-        <th>Term Years</th>
-        <th>Auto Renewal</th>
-        <th>Within 6 Months</th>
-        <th>Within 18 Months</th>
-        <th>Churn / Return</th>
-        <th>Grand Total</th>
-      </tr>
-      <tr>
-        <td>2014</td>
-        <td>5</td>
-        <td>MPA or Add-On</td>
-        <td>4</td>
-        <td>1500</td>
-        <td>0</td>
-        <td>12</td>
-        <td>-5</td>
-        <td>1499</td>
-      </tr>
-    </table>
-  </div>
-</div>

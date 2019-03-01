@@ -4,6 +4,8 @@ import { Observable, Observer } from "rxjs";
 import { map } from "rxjs/operators";
 import { Device } from "../model/device";
 import { DeactivateRequest } from "../model/DeactivateRequest";
+import { StatusUpdate } from "../model/StatusUpdate";
+import { ReasonUpdate } from "../model/REasonUpdate";
 
 
 @Injectable()
@@ -16,6 +18,15 @@ export class DeactivateService {
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Access-Control-Allow-Origin':'*'
+            })
+        };
+    }
+
+    setAccessToken(token: string): void {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Access-Control-Allow-Origin':'*',
+                'x-access-token': token
             })
         };
     }
@@ -60,7 +71,7 @@ export class DeactivateService {
 
     deactivateDevice(deactivateRequest: DeactivateRequest): Observable<any>{
         let fullURL = `${this.baseUrl}deactivate/deactivateDevice`;
-        return this.http.post(fullURL, deactivateRequest); 
+        return this.http.post(fullURL, deactivateRequest, this.httpOptions); 
     }
 
     removeDeviceFromRequest(device: Device): Observable<any>{
@@ -79,23 +90,21 @@ export class DeactivateService {
         return this.http.post(fullUrl, request, this.httpOptions);
     }
 
+    updateRequestStatus(statusUpdate: StatusUpdate): Observable<any> {
+        let fullURL = `${this.baseUrl}deactivate/updateRequestStatus`;
+
+        return this.http.post(fullURL, statusUpdate, this.httpOptions);
+    }
+
+    updateRequestReason(reasonUpdate: ReasonUpdate): Observable<any> {
+        let fullURL = `${this.baseUrl}deactivate/updateRequestReason`;
+
+        return this.http.post(fullURL, reasonUpdate, this.httpOptions);
+    }
+
     updateDeviceFees(deviceList: Device[]): Observable<any> {
         let fullURL = `${this.baseUrl}deactivate/updateDeviceFees`;
 
         return this.http.post(fullURL, deviceList, this.httpOptions);
-    }
-
-    private extractData(res: any){
-        if(res == null){
-            return null;
-        }
-
-        try{
-            let body = res.json();
-            return body || null;
-        }catch(error){
-            console.log(error);
-            return null;
-        }
     }
 }
