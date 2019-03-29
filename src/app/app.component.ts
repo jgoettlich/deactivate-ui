@@ -27,7 +27,7 @@ export class AppComponent {
   setToken() {
     this.route.queryParams.subscribe( params => {
       //pfm2SessionId=2137112740&code=2137112740&customerId=57&userId=1298352
-      this.setServiceTokens('2137112740', 57);
+      //this.setServiceTokens('2137112740', 57);
       if(params.pfm2SessionId != null) {
         this.setServiceTokens(params.pfm2SessionId, params.customerId);
       }
