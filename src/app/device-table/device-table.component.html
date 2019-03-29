@@ -22,11 +22,11 @@
               <td>{{device.cid}}</td>
               <td>
                 <app-request-status [isEditable]="isEditable" [requestId]="request.requestId" [dsn]="device.dsn"
-                  [status]="device.status"></app-request-status>
+                  [status]="device.status" [cid]="device.cid"></app-request-status>
               </td>
               <td>
                 <app-request-reason [isEditable]="isEditable" [requestId]="request.requestId" [dsn]="device.dsn"
-                  [reason]="device.reason"></app-request-reason>
+                  [reason]="device.reason" [cid]="device.cid"></app-request-reason>
               </td>
               <td *ngIf="!isEditable">{{device.fee}}</td>
               <td *ngIf="isEditable"><input type="number" [(ngModel)]="device.fee" (blur)="updateDeviceFees($event)" /></td>

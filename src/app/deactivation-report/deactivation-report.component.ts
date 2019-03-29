@@ -39,6 +39,11 @@ export class DeactivationReportComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.customerService.onCompanyChanged.addListener('managerChanged', (evt) => {
+      this.isEditable = evt.value;
+     });
+
+     this.isEditable = this.customerService.isCustomerManager;
   }
 
   getReport(){
@@ -115,6 +120,10 @@ export class DeactivationReportComponent implements OnInit {
 
   approveFee(request: DeactivateRequest) {
     request.status = StatusEnum.PENDING_WIRELSS;
+  }
+  
+  confirmRequest(request: DeactivateRequest) {
+    // TODO: Confirm
   }
 
   cancelRequest(request: DeactivateRequest) {

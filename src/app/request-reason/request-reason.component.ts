@@ -13,6 +13,7 @@ export class RequestReasonComponent implements OnInit {
   @Input() reason: number = 0;
   @Input() dsn: number = null;
   @Input() requestId: string = null;
+  @Input() cid: number = null;
 
   constructor(private deactivateService: DeactivateService) { }
 
@@ -27,7 +28,8 @@ export class RequestReasonComponent implements OnInit {
     let update : ReasonUpdate = {
       requestId: this.requestId,
       dsn: this.dsn,
-      reason: this.reason
+      reason: this.reason,
+      cid : this.cid
     }; 
     this.deactivateService.updateRequestReason(update).subscribe(() =>{});
   }

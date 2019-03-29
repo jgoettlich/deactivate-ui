@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private deactivateService: DeactivateService,
-    private customreService: CustomerService) { 
+    private customreService: CustomerService,
+    private route: ActivatedRoute) { 
       this.activatedRoute.queryParams.subscribe(params => {
         this.customreService.sessionId = params['sessionId'];
       });

@@ -4,6 +4,9 @@ import { DeactivateRequest } from '../model/DeactivateRequest';
 import { DeactivateService } from '../services/deactivate.service';
 import { DeviceTableComponent } from '../device-table/device-table.component';
 import { CustomerService } from '../services/customer.service';
+import { MatStepperModule, MatStepper } from '@angular/material/stepper';
+import { StatusEnum } from '../model/StatusEnum';
+import { CdkStep } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-request-details',
@@ -12,10 +15,13 @@ import { CustomerService } from '../services/customer.service';
 })
 export class RequestDetailsComponent implements OnInit {
 
-  isManager: boolean = false;
-  requestDetails : DeactivateRequest = null;
-  requestId: string = null;
-  lineFee: number;
+  isManager       : boolean = false;
+  requestDetails  : DeactivateRequest = null;
+  requestId       : string = null;
+  lineFee         : number;
+  currentStep     : number = -1;
+  
+  @ViewChild('stepper') stepper: MatStepper;
 
   @ViewChild('deviceTable') deviceTable : DeviceTableComponent;
 
@@ -56,9 +62,20 @@ export class RequestDetailsComponent implements OnInit {
       return;
     }
 
-    this.deactivateService.getDeactivateRequest(this.requestId).subscribe(request => {
+    this.deactivateService.getDeactivateRequest(this.requestId, this.customerService.getCompanyId()).subscribe(request => {
       this.requestDetails = request;
       this.deviceTable.setRequest(request);
+      let status : number = this.requestDetails.status;
+      let stepIndex : number = this.requestDetails.status;
+
+      this.stepper.steps.forEach(function(step: CdkStep, index: number, array: CdkStep[]){
+        if(index < status || status == StatusEnum.COMPLETED){
+          step.completed = true;
+        }
+      });
+
+      this.stepper.selectedIndex = stepIndex;
+      this.currentStep = stepIndex;
     });
   }
 
@@ -78,6 +95,10 @@ export class RequestDetailsComponent implements OnInit {
   updateLineFees(value: number){
     this.deviceTable.setDeviceFees(value);
     this.sumLines();
+  }
+
+  sendToNextStep() {
+    
   }
 
 }

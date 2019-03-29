@@ -1,21 +1,28 @@
-<nav class="navbar navbar-dark bg-dark mb-5">
-  <a class="navbar-brand" href="/">{{title}}</a>
-  <div class="navbar-expand mr-auto">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" [routerLink]="['/home']">Home</a>
-      <a class="nav-item nav-link" [routerLink]="['/deactivate']">Deactivate Devices</a>
-      <a class="nav-item nav-link" [routerLink]="['/report']">Reports</a>
-      <a class="nav-item nav-link" [routerLink]="['/internal']">Internal</a>
+<div *ngIf="checkedSession">
+  <div *ngIf="!validSession">
+    <h4>Unable to validate session.</h4>
+  </div>
+  <div *ngIf="validSession">
+    <nav class="navbar navbar-dark bg-dark mb-5">
+      <a class="navbar-brand" [routerLink]="['/home']">{{title}}</a>
+      <div class="navbar-expand mr-auto">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" [routerLink]="['/home']">Home</a>
+          <a class="nav-item nav-link" [routerLink]="['/deactivate']">Deactivate Devices</a>
+          <a class="nav-item nav-link" [routerLink]="['/report']">Reports</a>
+          <a *ngIf="isManager" class="nav-item nav-link" [routerLink]="['/internal']">Internal</a>
+        </div>
+      </div>
+        <div style="float:right;">
+          <input class="companySelector" type="text" list="company" autocomplete="off" placeholder="Company Id" [(ngModel)]="companySelect" (ngModelChange)="findCompany($event)" (keydown)="checkKey($event)"/>
+          <datalist id="company">
+            <option *ngFor="let c of companyList">{{c.companyName}} [{{c.cid}}]</option>
+          </datalist>
+        </div>
+    </nav>
+      
+    <div class="outletHolder">
+      <router-outlet></router-outlet>
     </div>
   </div>
-    <div style="float:right;">
-      <input class="companySelector" type="text" list="company" autocomplete="off" placeholder="Company Id" [(ngModel)]="companySelect" (ngModelChange)="findCompany($event)" (keydown)="checkKey($event)"/>
-      <datalist id="company">
-        <option *ngFor="let c of companyList">{{c.companyName}} [{{c.cid}}]</option>
-      </datalist>
-    </div>
-</nav>
-  
-<div class="outletHolder">
-  <router-outlet></router-outlet>
 </div>

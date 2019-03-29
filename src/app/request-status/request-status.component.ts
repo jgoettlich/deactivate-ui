@@ -13,6 +13,7 @@ export class RequestStatusComponent implements OnInit {
   @Input() status: number = 0;
   @Input() dsn: number = null;
   @Input() requestId: string = null;
+  @Input() cid: number = null;
 
   constructor(private deactivateService: DeactivateService) { }
 
@@ -27,7 +28,8 @@ export class RequestStatusComponent implements OnInit {
     let update : StatusUpdate = {
       requestId: this.requestId,
       dsn: this.dsn,
-      status: this.status
+      status: this.status,
+      cid: this.cid
     }; 
     this.deactivateService.updateRequestStatus(update).subscribe(() =>{});
   }

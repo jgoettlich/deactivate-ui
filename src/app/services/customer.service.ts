@@ -32,6 +32,11 @@ export class CustomerService {
         this.onCompanyChanged.emit('companyChanged', {value: companyId});
     }
 
+    setIsManager(isManager: boolean) {
+        this.isCustomerManager = isManager;
+        this.onCompanyChanged.emit('managerChanged', { value: isManager });
+    }
+
     getCustomerList(query: string): Observable<any> {
         let page: number = 0;
         let pageSize: number = 10;
@@ -58,8 +63,8 @@ export class CustomerService {
         return this.http.get(fullUrl, this.httpOptions);
     }
 
-    validateSession(session: string): Observable<any> {
-        let fullUrl = `${this.baseUrl}validateSession`;
+    validateSession(session: string, companyId: number): Observable<any> {
+        let fullUrl = `${this.baseUrl}validateSession?companyId=${companyId}`;
         this.httpOptions = {
             headers: {
                 'Access-Control-Allow-Origin':'*',

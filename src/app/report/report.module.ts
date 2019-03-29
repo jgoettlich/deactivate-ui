@@ -10,7 +10,7 @@ import { DeviceTableComponent } from '../device-table/device-table.component';
 import { RequestDetailsComponent } from '../request-details/request-details.component';
 import { RequestStatusComponent } from '../request-status/request-status.component';
 import { RequestReasonComponent } from '../request-reason/request-reason.component';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatStepperModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -18,7 +18,9 @@ import { MatTableModule } from '@angular/material';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatStepperModule,
+    MatIconModule,
   ],
   declarations: [
     ReportHomeComponent,

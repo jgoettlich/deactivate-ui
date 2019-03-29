@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable, Observer } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
 import { Device } from "../model/device";
 import { DeactivateRequest } from "../model/DeactivateRequest";
 import { StatusUpdate } from "../model/StatusUpdate";
@@ -23,6 +22,9 @@ export class DeactivateService {
     }
 
     setAccessToken(token: string): void {
+        if(token == null){
+            return;
+        }
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Access-Control-Allow-Origin':'*',
@@ -51,8 +53,8 @@ export class DeactivateService {
         return this.http.get(fullUrl, this.httpOptions);
     }
 
-    getDeactivateRequest(requestId: string): Observable<any> {
-        let fullURL = `${this.baseUrl}deactivate/getRequest?requestId=${requestId}`;
+    getDeactivateRequest(requestId: string, companyId: number): Observable<any> {
+        let fullURL = `${this.baseUrl}deactivate/getRequest?requestId=${requestId}&companyId=${companyId}`;
 
         return this.http.get(fullURL, this.httpOptions);
     }

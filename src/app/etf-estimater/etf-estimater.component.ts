@@ -4,6 +4,7 @@ import { CustomerInfo } from '../model/CustomerInfo';
 import { CustomerService } from '../services/customer.service';
 import { ContractDate } from '../model/ContractData';
 import { MatDatepicker } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-etf-estimater',
@@ -24,7 +25,8 @@ export class EtfEstimaterComponent implements OnInit {
   preTaxTotal: number = 0;
   unitSuspendedMonths: number = 0;
 
-  constructor(private customerService: CustomerService) { 
+  constructor(private customerService: CustomerService,
+    private router : Router) { 
   }
 
   ngOnInit() {
@@ -47,6 +49,18 @@ export class EtfEstimaterComponent implements OnInit {
     };
 
     this.customerInfo = new CustomerInfo();
+
+    this.customerService.onCompanyChanged.addListener('managerChanged', (evt) => {
+      if(evt.value == true){
+        this.getCustomerInfo();
+        this.getCustomerContractData();
+      }
+     });
+     
+     if(this.customerService.isCustomerManager == false){
+      this.router.navigate(['home']);
+      return;
+     }
 
     this.getCustomerInfo();
     this.getCustomerContractData();

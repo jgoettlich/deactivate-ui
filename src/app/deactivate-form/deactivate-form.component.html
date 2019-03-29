@@ -1,20 +1,31 @@
 <div class="container-fluid">
-    <div class="form-group">
+  <div class="card">
+    <div class="card-header">
+      <h3>Unit Deactivation Request</h3>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
         <label for="requestedDateField">Requested Date:</label>
         <div>
-          <input matInput [matDatepicker]="picker" id="requestedDateField" placeholder="Choose a date" aria-describedby="dateHelp" [(ngModel)]="requestedDate">
+          <input matInput [matDatepicker]="picker" id="requestedDateField" placeholder="Choose a date"
+            aria-describedby="dateHelp" [(ngModel)]="requestedDate">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </div>
-        <small id="dateHelp" class="form-text text-muted">Select a date you would like you request to start being processed.</small>
+        <small id="dateHelp" class="form-text text-muted">Select a date you would like you request to start being
+          processed.</small>
       </div>
       <div class="form-group">
         <label for="emailField">Contact Email:</label>
-        <input type="email" class="form-control" id="emailField" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="contactEmail">
-        <small id="emailHelp" class="form-text text-muted">Verify this is a good email address to contact about this request.</small>
+        <input type="email" class="form-control" id="emailField" aria-describedby="emailHelp" placeholder="Enter email"
+          [(ngModel)]="contactEmail">
+        <small id="emailHelp" class="form-text text-muted">Verify this is a good email address to contact about this
+          request.</small>
       </div>
       <div class="form-group">
         <label for="notesField">Request Notes:</label>
         <textarea class="form-control" id="notesField" rows="3" [(ngModel)]="requestNotes"></textarea>
       </div>
+    </div>
+  </div>
 </div>

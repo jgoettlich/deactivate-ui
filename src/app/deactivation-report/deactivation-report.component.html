@@ -1,8 +1,8 @@
 
 <div class="row">
   <div class="col">
-    <div class="left"><button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button></div>
-    <div class="right"><button class="btn btn-outline-dark" (click)="createNewRequest()">New Request</button></div>
+    <div class="left paddingBottom"><button class="btn btn-outline-dark" (click)="refreshReport()">Refresh</button></div>
+    <div class="right paddingBottom"><button class="btn btn-outline-dark" (click)="createNewRequest()">New Request</button></div>
   </div>
 </div>
 <div class="row">
@@ -15,8 +15,6 @@
             <th>Company Id</th>
             <th (click)="setSort('status')">Status <i id="statusArrows" class="fa fa-fw fa-sort"></i></th>
             <th (click)="setSort('reason')">Reason <i id="reasonArrows" class="fa fa-fw fa-sort"></i></th>
-            <th>Customer Notes</th>
-            <th>CM Notes</th>
             <th (click)="setSort('createdDate')">Created Date <i id="createdDateArrows" class="fa fa-fw fa-sort-asc"></i></th>
             <th (click)="setSort('requestedDate')">Requested Date <i id="requestedDateArrows" class="fa fa-fw fa-sort"></i></th>
             <th (click)="setSort('completedDate')">Completed Date <i id="completedDateArrows" class="fa fa-fw fa-sort"></i></th>
@@ -33,20 +31,14 @@
           <tr>
             <td><button class="btn btn-link" (click)="viewDetails(request)">{{request.cid}}</button></td>
             <td>
-              <app-request-status [isEditable]="isEditable" [requestId]="request.requestId" [status]="request.status" ></app-request-status>
+              <app-request-status [isEditable]="isEditable" [requestId]="request.requestId" [status]="request.status" [cid]="request.cid" ></app-request-status>
             </td>
             <td>
-              <app-request-reason [isEditable]="isEditable" [requestId]="request.requestId" [reason]="request.reason"></app-request-reason>
+              <app-request-reason [isEditable]="isEditable" [requestId]="request.requestId" [reason]="request.reason" [cid]="request.cid"></app-request-reason>
             </td>
-            <td>
-              <textarea [(ngModel)]="request.cust_notes"></textarea>
-            </td>
-            <td>
-              <textarea [(ngModel)]="request.cm_notes"></textarea>
-            </td>
-            <td>{{request.createdDate}}</td>
-            <td>{{request.requestedDate}}</td>
-            <td>{{request.completedDate}}</td>
+            <td>{{request.createdDate | date : 'MM/dd/yyyy'}}</td>
+            <td>{{request.requestedDate | date : 'MM/dd/yyyy'}}</td>
+            <td>{{request.completedDate | date : 'MM/dd/yyyy'}}</td>
             <td>{{request.username}}</td>
             <td (click)="viewDetails(request)">{{request.deviceList.length}}</td>
             <td>{{request.fee}}</td>

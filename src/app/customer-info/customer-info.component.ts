@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerInfo } from '../model/CustomerInfo';
 import { CustomerService } from '../services/customer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-info',
@@ -11,12 +12,24 @@ export class CustomerInfoComponent implements OnInit {
 
   customerInfo: CustomerInfo;
 
-  constructor(private customerService: CustomerService) 
+  constructor(private customerService: CustomerService,
+    private router : Router) 
   { 
       this.customerInfo = new CustomerInfo();
   }
 
   ngOnInit() {
+    this.customerService.onCompanyChanged.addListener('managerChanged', (evt) => {
+      if(evt.value == true){
+        this.getCustomerInfo();
+      }
+     });
+     
+     if(this.customerService.isCustomerManager == false){
+      this.router.navigate(['home']);
+      return;
+     }
+
     this.getCustomerInfo();
   }
 

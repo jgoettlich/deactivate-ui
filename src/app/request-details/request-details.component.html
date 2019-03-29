@@ -3,6 +3,16 @@
     <button class="btn btn-outline-dark" (click)="close()">Back</button>
   </div>
   <div class="row">
+    <div class="col">
+      <mat-horizontal-stepper #stepper labelPosition="bottom" linear>
+        <mat-step completed="false" editable="false" label="Determine Fees"></mat-step>
+        <mat-step completed="false" editable="false" label="Final Customer Approval"></mat-step>
+        <mat-step completed="false" editable="false" label="Wireless Deactivation"></mat-step>
+        <mat-step completed="false" editable="false" label="Completed"></mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-4">
       <div class="card">
         <div class="card-header">
@@ -21,21 +31,21 @@
               <label>Created Date:</label>
             </div>
             <div class="col">
-              <p>{{requestDetails.createdDate}}</p>
+              <p>{{requestDetails.createdDate | date : 'MM/dd/yyyy'}}</p>
             </div>
             <div class="w-100"></div>
             <div class="col">
               <label>Requested Date:</label>
             </div>
             <div class="col">
-              <p>{{requestDetails.requestedDate}}</p>
+              <p>{{requestDetails.requestedDate | date : 'MM/dd/yyyy'}}</p>
             </div>
             <div class="w-100"></div>
             <div class="col">
               <label>Completed Date:</label>
             </div>
             <div class="col">
-              <p>{{requestDetails.completedDate}}</p>
+              <p>{{requestDetails.completedDate | date : 'MM/dd/yyyy'}}</p>
             </div>
             <div class="w-100"></div>
             <div class="col">
@@ -57,7 +67,7 @@
             </div>
             <div class="col">
               <app-request-status [isEditable]="isManager" [requestId]="requestDetails.requestId"
-                [status]="requestDetails.status"></app-request-status>
+                [status]="requestDetails.status" [cid]="requestDetails.cid"></app-request-status>
             </div>
             <div class="w-100"></div>
             <div class="col">
@@ -65,7 +75,11 @@
             </div>
             <div class="col">
               <app-request-reason [isEditable]="isManager" [requestId]="requestDetails.requestId"
-                [reason]="requestDetails.reason"></app-request-reason>
+                [reason]="requestDetails.reason" [cid]="requestDetails.cid"></app-request-reason>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+              <button class="btn btn-outline-dark" (click)="sendToNextStep()">Send To Next Step</button>
             </div>
           </div>
         </div>
@@ -86,7 +100,7 @@
               <input type="number" [(value)]="requestDetails.fee" />
             </div>
             <div class="w-100"></div>
-            <div class="col">
+            <div *ngIf="currentStep == 0" class="col">
               <button class="btn btn-outline-dark" (click)="sumLines()">Sum Lines</button>
             </div>
           </div>

@@ -41,6 +41,10 @@ export class DeactivateDeviceComponent implements OnInit {
     this.customerService.onCompanyChanged.addListener('companyChanged', (evt) => { 
       this.getDeviceList();
      });
+     this.customerService.onCompanyChanged.addListener('managerChanged', (evt) => {
+      this.isEditable = evt.value;
+     });
+     this.isEditable = this.customerService.isCustomerManager;
     this.getDeviceList();
   }
 
